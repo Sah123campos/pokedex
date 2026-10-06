@@ -1,0 +1,2222 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pokédex Nacional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Lilita+One&family=Nunito:wght@500;700;800&display=swap"
+    />
+    <style>
+      :root {
+        --shell: #d9262f;
+        --shell-deep: #8f141c;
+        --ink: #0e1320;
+        --panel: #171e2f;
+        --panel-2: #1f2842;
+        --line: #2d3957;
+        --text: #f3f5fa;
+        --muted: #9eaac4;
+        --lens: #38a8f6;
+        --gold: #ffcb05;
+        --f-display: "Lilita One", "Trebuchet MS", system-ui, sans-serif;
+        --f-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --f-data: "Chakra Petch", "Arial Narrow", system-ui, sans-serif;
+        --c1: #6390f0;
+        --c2: #2a3f86;
+        --fg1: #10151f;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        background: var(--ink);
+        min-height: 100%;
+        overflow-y: auto;
+      }
+
+      body {
+        margin: 0;
+        background: var(--ink);
+        color: var(--text);
+        font-family: var(--f-body);
+        font-size: 15px;
+        line-height: 1.5;
+        padding-inline: 16px;
+        padding-block: 0 40px;
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+      html.lock,
+      html.lock body {
+        overflow: hidden;
+      }
+
+      @media (min-width: 980px) {
+        html.lock,
+        html.lock body {
+          overflow-y: auto;
+        }
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 2px;
+      }
+      .wrap {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .device {
+        background: linear-gradient(
+          180deg,
+          var(--shell) 0%,
+          var(--shell-deep) 100%
+        );
+        border-radius: 0 0 28px 28px;
+        padding: 18px 20px 22px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        box-shadow:
+          0 10px 0 #5e0d13,
+          0 24px 40px rgba(0, 0, 0, 0.45);
+        border-bottom: 4px solid #5e0d13;
+      }
+      .lens {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        flex: none;
+        border: 4px solid #fff;
+        background: radial-gradient(
+          circle at 32% 30%,
+          #d8f1ff 0 10%,
+          var(--lens) 30%,
+          #0b5aa0 75%
+        );
+        box-shadow:
+          0 0 0 4px #1b1f2c,
+          0 0 22px rgba(56, 168, 246, 0.8);
+      }
+      .leds {
+        display: flex;
+        gap: 7px;
+        align-self: flex-start;
+        margin-top: 2px;
+      }
+      .leds i {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        border: 2px solid #1b1f2c;
+        display: block;
+      }
+      .leds i:nth-child(1) {
+        background: #ff6a6a;
+      }
+      .leds i:nth-child(2) {
+        background: #ffd93d;
+      }
+      .leds i:nth-child(3) {
+        background: #58e07a;
+      }
+      .brand {
+        min-width: 0;
+      }
+      .brand h1 {
+        font-family: var(--f-display);
+        font-weight: 400;
+        font-size: clamp(28px, 5vw, 44px);
+        line-height: 1;
+        margin: 0;
+        letter-spacing: 0.02em;
+        color: #fff;
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+      }
+      .brand p {
+        margin: 4px 0 0;
+        font-family: var(--f-data);
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #ffd0d3;
+      }
+      .counter {
+        margin-left: auto;
+        font-family: var(--f-data);
+        text-align: right;
+        background: #1b1f2c;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 6px 14px;
+      }
+      .counter b {
+        display: block;
+        font-size: 26px;
+        line-height: 1.1;
+        color: #8cf2a6;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.06em;
+      }
+      .counter span {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-block: 22px 16px;
+      }
+      .gens {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+        margin-inline: -16px;
+        padding-inline: 16px;
+        scroll-snap-type: x proximity;
+      }
+      .gen {
+        flex: none;
+        scroll-snap-align: start;
+        border: 2px solid var(--line);
+        background: var(--panel);
+        border-radius: 12px;
+        padding: 8px 14px;
+        cursor: pointer;
+        text-align: left;
+        line-height: 1.2;
+        min-width: 96px;
+      }
+      .gen b {
+        display: block;
+        font-family: var(--f-display);
+        font-weight: 400;
+        font-size: 17px;
+        letter-spacing: 0.02em;
+      }
+      .gen small {
+        font-family: var(--f-data);
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+      }
+      .gen:hover {
+        border-color: #51618d;
+      }
+      .gen[aria-pressed="true"] {
+        background: var(--gold);
+        border-color: #fff;
+        color: #1a1500;
+      }
+      .gen[aria-pressed="true"] small {
+        color: #4a3d00;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        flex: 1 1 150px;
+      }
+      .field.grow {
+        flex: 3 1 240px;
+      }
+      .field label {
+        font-family: var(--f-data);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .field input,
+      .field select {
+        width: 100%;
+        min-width: 0;
+        background: var(--panel);
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        padding: 9px 12px;
+        color: var(--text);
+        appearance: none;
+        -webkit-appearance: none;
+      }
+      .field select {
+        background-image:
+          linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+          linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+        background-position:
+          calc(100% - 18px) 55%,
+          calc(100% - 12px) 55%;
+        background-size: 6px 6px;
+        background-repeat: no-repeat;
+        padding-right: 32px;
+      }
+      .field input::placeholder {
+        color: #6f7c9b;
+      }
+      .field input:focus,
+      .field select:focus {
+        border-color: var(--lens);
+      }
+      .status {
+        font-family: var(--f-data);
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .status b {
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+        align-items: start;
+      min-height: 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
+        gap: 10px;
+        min-width: 0;
+      }
+      .card {
+        --cc: #6390f0;
+        position: relative;
+        text-align: left;
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        padding: 10px 10px 10px 14px;
+        cursor: pointer;
+        min-width: 0;
+        background: linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--cc) 30%, var(--panel)) 0%,
+          var(--panel) 70%
+        );
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow: hidden;
+        content-visibility: auto;
+        contain-intrinsic-size: auto 96px;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 5px;
+        background: var(--cc);
+      }
+      .card:hover {
+        border-color: var(--cc);
+        transform: translateY(-2px);
+        transition: transform 0.12s;
+      }
+      .card[aria-current="true"] {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 2px var(--gold);
+      }
+      .card .no {
+        font-family: var(--f-data);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      .card .nm {
+        font-family: var(--f-display);
+        font-size: 18px;
+        line-height: 1.1;
+        overflow-wrap: anywhere;
+      }
+      .card .ty {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        border-radius: 999px;
+        padding: 1px 9px 1px 6px;
+        font-family: var(--f-data);
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .tag svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+        flex: none;
+      }
+      .card .mk {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        display: flex;
+        gap: 3px;
+      }
+      .card .mk i {
+        font-style: normal;
+        font-family: var(--f-data);
+        font-weight: 700;
+        font-size: 10px;
+        border-radius: 5px;
+        padding: 0 4px;
+        background: #0009;
+        color: var(--gold);
+        letter-spacing: 0.04em;
+      }
+      .empty {
+        grid-column: 1/-1;
+        padding: 40px 16px;
+        text-align: center;
+        color: var(--muted);
+        border: 2px dashed var(--line);
+        border-radius: 14px;
+      }
+      .detail {
+        --glyph: none;
+        background: var(--panel);
+        border: 3px solid #000;
+        border-radius: 22px;
+        overflow: hidden;
+        min-width: 0;
+        box-shadow:
+          0 0 0 4px var(--shell),
+          0 18px 40px rgba(0, 0, 0, 0.5);
+      }
+      .screen {
+        position: relative;
+        padding: 18px 18px 22px;
+        color: #fff;
+        background: radial-gradient(
+          120% 90% at 50% 0%,
+          color-mix(in srgb, var(--c1) 75%, #fff 0%) 0%,
+          var(--c2) 100%
+        );
+        transition: background 0.3s;
+      }
+      .screen::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--glyph);
+        background-size: 46px 46px;
+        opacity: 0.1;
+        pointer-events: none;
+      }
+      .screen > * {
+        position: relative;
+      }
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .ib {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        border: 2px solid #0006;
+        background: #0004;
+        color: #fff;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        line-height: 1;
+      }
+      .ib:hover {
+        background: #0007;
+      }
+      .close {
+        display: none;
+      }
+      .dexno {
+        font-family: var(--f-data);
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0.14em;
+        background: #0006;
+        border-radius: 999px;
+        padding: 4px 14px;
+        font-variant-numeric: tabular-nums;
+      }
+      .emblem {
+        display: block;
+        width: min(100%, 260px);
+        margin: 6px auto 0;
+        aspect-ratio: 1/1;
+        filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.35));
+      }
+      .emblem .glyph {
+        fill: #fff;
+      }
+      .shinyon .emblem {
+        filter: hue-rotate(var(--hue, 60deg)) saturate(1.25)
+          drop-shadow(0 0 16px rgba(255, 214, 90, 0.9));
+      }
+      .sp {
+        opacity: 0;
+      }
+      .shinyon .sp {
+        opacity: 1;
+        animation: tw 1.6s ease-in-out infinite;
+      }
+      .shinyon .sp:nth-of-type(2) {
+        animation-delay: 0.5s;
+      }
+      .shinyon .sp:nth-of-type(3) {
+        animation-delay: 1s;
+      }
+      @keyframes tw {
+        0%,
+        100% {
+          transform: scale(0.6);
+          opacity: 0.4;
+        }
+        50% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .sp {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+      .name {
+        font-family: var(--f-display);
+        font-weight: 400;
+        font-size: clamp(34px, 7vw, 46px);
+        line-height: 1;
+        margin: 6px 0 10px;
+        text-align: center;
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
+        overflow-wrap: anywhere;
+      }
+      .types {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .types .tag {
+        font-size: 13px;
+        padding: 3px 14px 3px 10px;
+        border: 2px solid #0004;
+      }
+      .types .tag svg {
+        width: 16px;
+        height: 16px;
+      }
+      .body {
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .desc {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 62ch;
+      }
+      .dl {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .cell {
+        background: var(--panel-2);
+        border: 2px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 12px;
+        min-width: 0;
+      }
+      .cell.wide {
+        grid-column: 1/-1;
+      }
+      .cell h3 {
+        margin: 0 0 4px;
+        font-family: var(--f-data);
+        font-weight: 600;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .cell .v {
+        font-weight: 800;
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+      .stars {
+        display: flex;
+        gap: 3px;
+        margin-top: 2px;
+      }
+      .stars svg {
+        width: 16px;
+        height: 16px;
+        fill: #394565;
+      }
+      .stars svg.on {
+        fill: var(--gold);
+      }
+      .rar {
+        display: inline-block;
+        border-radius: 8px;
+        padding: 2px 10px;
+        font-family: var(--f-data);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .sw {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .switch {
+        position: relative;
+        width: 52px;
+        height: 30px;
+        flex: none;
+        border-radius: 999px;
+        border: 2px solid var(--line);
+        background: #0b101c;
+        cursor: pointer;
+        padding: 0;
+      }
+      .switch::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--muted);
+        transition:
+          transform 0.15s,
+          background 0.15s;
+      }
+      .switch[aria-checked="true"] {
+        background: #5a4700;
+        border-color: var(--gold);
+      }
+      .switch[aria-checked="true"]::after {
+        transform: translateX(22px);
+        background: var(--gold);
+      }
+      .switch:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 2px;
+      }
+      .chip {
+        border-radius: 8px;
+        padding: 2px 9px;
+        font-family: var(--f-data);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border: 2px solid var(--line);
+        background: #0b101c;
+      }
+      .chip.mega {
+        border-color: #ff8ad0;
+        color: #ffc2e8;
+      }
+      .chip.gmax {
+        border-color: #ff6f6f;
+        color: #ffb3b3;
+      }
+      .chip.reg {
+        border-color: #7fd1ff;
+        color: #bfe7ff;
+      }
+      .chip.prim {
+        border-color: #ffb36b;
+        color: #ffd6aa;
+      }
+      .chip.mov {
+        border-color: #c6a5ff;
+        color: #e1d0ff;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .nav {
+        display: flex;
+        gap: 8px;
+      }
+      .nav button {
+        flex: 1;
+        border: 2px solid var(--line);
+        background: var(--panel-2);
+        border-radius: 12px;
+        padding: 10px;
+        cursor: pointer;
+        font-family: var(--f-data);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .nav button:hover {
+        border-color: var(--lens);
+      }
+      .nav button:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      .foot {
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 12.5px;
+        max-width: 78ch;
+      }
+      @media (min-width: 980px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr) 410px;
+        }
+        .detail {
+          position: sticky;
+          top: 16px;
+          max-height: calc(100vh - 32px);
+          overflow-y: auto;
+        }
+      }
+      @media (max-width: 979px) {
+        .detail {
+          position: fixed;
+          inset: 0;
+          z-index: 50;
+          border-radius: 0;
+          border: 0;
+          box-shadow: none;
+          overflow-y: auto;
+          transform: translateY(102%);
+          visibility: hidden;
+          transition:
+            transform 0.25s ease,
+            visibility 0s 0.25s;
+          padding-top: env(safe-area-inset-top, 0px);
+          padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        .detail.open {
+          transform: none;
+          visibility: visible;
+          transition: transform 0.25s ease;
+        }
+        .close {
+          display: grid;
+        }
+      }
+      @media (max-width: 420px) {
+        .dl {
+          grid-template-columns: 1fr;
+        }
+        .counter {
+          margin-left: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+
+      /* ===== TEMA POKÉMON ===== */
+      :root {
+        --shell: #ee1515;
+        --shell-deep: #b30d0d;
+        --gold: #ffde00;
+        --ink: #10142a;
+        --panel: #1a2140;
+        --panel-2: #232c55;
+        --line: #3b4a8a;
+        --lens: #3b9bff;
+      }
+      body {
+        background:
+          radial-gradient(
+              circle,
+              transparent 0 9px,
+              rgba(255, 255, 255, 0.05) 10px 12px,
+              transparent 13px
+            )
+            0 0/90px 90px,
+          radial-gradient(120% 60% at 50% 0, #27338a 0, transparent 60%),
+          var(--ink);
+      }
+      .device {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 40px 40px;
+        border-bottom: 10px solid #222;
+        background: linear-gradient(
+          180deg,
+          #ff3b3b 0,
+          #ee1515 55%,
+          #c70f0f 100%
+        );
+        box-shadow:
+          0 6px 0 #fff,
+          0 10px 0 #222,
+          0 24px 40px rgba(0, 0, 0, 0.5);
+      }
+      .device::before {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -70px;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          #fff 0 22%,
+          #222 23% 30%,
+          transparent 31%
+        );
+        opacity: 0.18;
+      }
+      .device::after {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 45%;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.35),
+          transparent
+        );
+      }
+      .device > * {
+        position: relative;
+        z-index: 1;
+      }
+      .brand h1 {
+        color: var(--gold);
+        -webkit-text-stroke: 3px #2a4fa8;
+        paint-order: stroke fill;
+        letter-spacing: 0.04em;
+        text-shadow:
+          0 4px 0 #1c3578,
+          0 7px 0 rgba(0, 0, 0, 0.25);
+      }
+      .brand p {
+        color: #fff;
+      }
+      .gen {
+        position: relative;
+        padding-left: 46px;
+        border: 3px solid #fff;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #2c3a8c, #1a2354);
+        box-shadow: 0 4px 0 #0b1030;
+        transition: transform 0.12s;
+      }
+      .gen::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        width: 26px;
+        height: 26px;
+        margin-top: -13px;
+        border-radius: 50%;
+        border: 2px solid #222;
+        background:
+          radial-gradient(circle, #fff 0 18%, #222 19% 28%, transparent 29%),
+          linear-gradient(180deg, #ee1515 0 46%, #222 46% 54%, #fff 54%);
+      }
+      .gen:hover {
+        transform: translateY(-2px);
+        border-color: var(--gold);
+      }
+      .gen[aria-pressed="true"] {
+        background: linear-gradient(180deg, #fff27a, #ffcb05);
+        border-color: #2a4fa8;
+        box-shadow: 0 4px 0 #8a6d00;
+      }
+      .field input,
+      .field select {
+        border-width: 3px;
+        border-radius: 14px;
+        background-color: #141a36;
+      }
+      .field input:focus,
+      .field select:focus {
+        border-color: var(--gold);
+      }
+      .card {
+        border: 3px solid color-mix(in srgb, var(--cc) 65%, #fff);
+        border-radius: 16px;
+        padding: 12px 12px 12px 16px;
+        background:
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(255, 255, 255, 0.22),
+            transparent 45%
+          ),
+          linear-gradient(
+            145deg,
+            color-mix(in srgb, var(--cc) 55%, #1a2140),
+            #141a36 75%
+          );
+        box-shadow:
+          inset 0 0 0 2px rgba(0, 0, 0, 0.35),
+          0 4px 0 rgba(0, 0, 0, 0.4);
+      }
+      .card::after {
+        content: "";
+        position: absolute;
+        right: -16px;
+        bottom: -16px;
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        pointer-events: none;
+        border: 4px solid rgba(255, 255, 255, 0.25);
+        background:
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.3) 0 16%,
+            rgba(0, 0, 0, 0.35) 17% 26%,
+            transparent 27%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.12) 0 46%,
+            rgba(0, 0, 0, 0.3) 46% 54%,
+            transparent 54%
+          );
+      }
+      .card > * {
+        z-index: 1;
+      }
+      .card:hover {
+        transform: translateY(-4px) rotate(-0.6deg);
+      }
+      .card[aria-current="true"] {
+        border-color: var(--gold);
+        box-shadow:
+          0 0 0 3px var(--gold),
+          0 0 18px rgba(255, 222, 0, 0.5);
+      }
+      .card .nm {
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+      }
+      .screen {
+        border-bottom: 6px solid #222;
+      }
+      .screen::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.05) 0 2px,
+          transparent 2px 5px
+        );
+      }
+      .dexno {
+        background: #222;
+        color: var(--gold);
+        border: 2px solid var(--gold);
+      }
+      .emblem {
+        animation: flutua 3s ease-in-out infinite;
+      }
+      @keyframes flutua {
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      .cell {
+        border: 3px solid var(--line);
+        border-radius: 14px;
+        background: linear-gradient(180deg, #232c55, #1a2140);
+      }
+      .nav button {
+        border-width: 3px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #2c3a8c, #1a2354);
+      }
+      .nav button:hover {
+        border-color: var(--gold);
+      }
+      @media (min-width: 980px) {
+        .detail {
+          border: 6px solid var(--gold);
+          border-radius: 26px;
+          box-shadow:
+            0 0 0 4px #2a4fa8,
+            0 0 0 8px #222,
+            0 20px 40px rgba(0, 0, 0, 0.55);
+        }
+      }
+
+      /* ===== COMPLEMENTO (imagens + dados online) ===== */
+      .emblem.art {
+        object-fit: contain;
+      }
+      .art[hidden] {
+        display: none;
+      }
+      .shinyon .emblem.art {
+        filter: drop-shadow(0 0 18px rgba(255, 214, 90, 0.95)) saturate(1.1);
+      }
+      .card .spr {
+        position: absolute;
+        right: 2px;
+        bottom: 2px;
+        width: 56px;
+        height: 56px;
+        image-rendering: pixelated;
+        z-index: 2;
+        pointer-events: none;
+        filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.35));
+      }
+      #extra {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      #extra .wide {
+        grid-column: 1 / -1;
+      }
+      .stat {
+        display: grid;
+        grid-template-columns: 84px 34px 1fr;
+        gap: 8px;
+        align-items: center;
+        font-family: var(--f-data);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        margin-top: 5px;
+      }
+      .stat span.tr {
+        height: 8px;
+        border-radius: 99px;
+        background: #0b101c;
+        overflow: hidden;
+      }
+      .stat span.tr i {
+        display: block;
+        height: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #58e07a, var(--gold));
+      }
+      .desc.en {
+        font-size: 13.5px;
+        color: var(--muted);
+        border-left: 3px solid var(--line);
+        padding-left: 10px;
+      }
+      @media (max-width: 420px) {
+        #extra {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="device">
+        <div class="lens" aria-hidden="true"></div>
+        <div class="leds" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="brand">
+          <h1>Pokédex Nacional</h1>
+          <p>Da região de Kanto até Paldea</p>
+        </div>
+        <div class="counter" aria-live="polite">
+          <b id="count">0001</b><span>espécies na lista</span>
+        </div>
+      </header>
+
+      <section class="controls" aria-label="Filtros">
+        <div
+          class="gens"
+          id="gens"
+          role="group"
+          aria-label="Escolha a geração"
+        ></div>
+        <div class="row">
+          <div class="field grow">
+            <label for="q">Buscar por nome ou número</label>
+            <input
+              id="q"
+              type="search"
+              placeholder="Ex.: Pikachu ou 25"
+              autocomplete="off"
+            />
+          </div>
+          <div class="field">
+            <label for="ft">Tipo</label
+            ><select id="ft"></select>
+          </div>
+          <div class="field">
+            <label for="fr">Raridade</label
+            ><select id="fr"></select>
+          </div>
+          <div class="field">
+            <label for="ff">Formas</label
+            ><select id="ff"></select>
+          </div>
+          <div class="field">
+            <label for="fs">Ordem</label>
+            <select id="fs">
+              <option value="n">Número da Pokédex</option>
+              <option value="a">Nome (A–Z)</option>
+            </select>
+          </div>
+        </div>
+        <div class="status">
+          <span id="gl"></span><span><b id="shown">0</b> de 1025 Pokémon</span>
+        </div>
+      </section>
+
+      <main class="layout">
+        <div class="grid" id="grid" aria-label="Lista de Pokémon"></div>
+        <aside class="detail" id="detail" aria-label="Detalhes do Pokémon">
+          <div class="screen" id="screen">
+            <div class="toolbar">
+              <button class="ib close" id="close" aria-label="Fechar detalhes">
+                ✕
+              </button>
+              <span class="dexno" id="dexno">Nº 001</span>
+              <button
+                class="ib"
+                id="shinybtn"
+                aria-label="Alternar versão shiny"
+                title="Alternar shiny"
+              >
+                ✦
+              </button>
+            </div>
+            <svg
+              class="emblem"
+              id="emblem"
+              viewBox="0 0 200 200"
+              role="img"
+              aria-label="Emblema do tipo"
+            ></svg>
+            <h2 class="name" id="name"></h2>
+            <div class="types" id="types"></div>
+          </div>
+          <div class="body">
+            <p class="desc" id="desc"></p>
+            <div class="dl">
+              <div class="cell">
+                <h3>Raridade</h3>
+                <div id="rar"></div>
+              </div>
+              <div class="cell">
+                <h3>Shiny</h3>
+                <div id="shiny"></div>
+              </div>
+              <div class="cell">
+                <h3>Geração</h3>
+                <div class="v" id="genv"></div>
+              </div>
+              <div class="cell">
+                <h3>Mega e outras formas</h3>
+                <div id="forms"></div>
+              </div>
+              <div class="cell wide">
+                <h3>Nos filmes</h3>
+                <div id="movie"></div>
+              </div>
+            </div>
+            <div class="nav">
+              <button id="prev"></button><button id="next"></button>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <p class="foot">
+        Pokémon e seus nomes são marcas da Nintendo, Game Freak e Creatures.
+        Este é um projeto de fã, sem fins comerciais. Descrições escritas em
+        português para este site. As ilustrações são emblemas por tipo, não a
+        arte oficial.
+      </p>
+    </div>
+    <script>
+      /* ---------- DADOS ---------- */
+      const TYPES = {
+        no: [
+          "Normal",
+          "#a8a77a",
+          "M12 3a9 9 0 1 0 .01 0zm0 5a4 4 0 1 1-.01 0z",
+        ],
+        fi: [
+          "Fogo",
+          "#ee8130",
+          "M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3-1-4 0-7 1-10z",
+        ],
+        wa: ["Água", "#6390f0", "M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12z"],
+        el: ["Elétrico", "#f7d02c", "M13 2 5 13h6l-1 9 8-12h-6z"],
+        gr: [
+          "Planta",
+          "#7ac74c",
+          "M5 19C5 9 11 4 20 4c0 9-5 15-13 15zM5 19l-2 3z",
+        ],
+        ic: [
+          "Gelo",
+          "#96d9d6",
+          "M11 2h2v20h-2zM2 11h20v2H2zM4.2 5.6l1.4-1.4 14.2 14.2-1.4 1.4zM18.4 4.2l1.4 1.4L5.6 19.8l-1.4-1.4z",
+        ],
+        fg: [
+          "Lutador",
+          "#c22e28",
+          "M6 8a2 2 0 0 1 2-2h8a3 3 0 0 1 3 3v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z",
+        ],
+        po: [
+          "Veneno",
+          "#a33ea1",
+          "M12 3c4 4 6 7 6 10a6 6 0 0 1-12 0c0-3 2-6 6-10zM20 4a2 2 0 1 1-.01 0z",
+        ],
+        gd: ["Terrestre", "#e2bf65", "M2 20 9 6l4 7 3-4 6 11z"],
+        fl: [
+          "Voador",
+          "#a98ff3",
+          "M3 14c5-1 8-4 9-9 1 5 4 8 9 9-4 1-7 3-9 7-2-4-5-6-9-7z",
+        ],
+        ps: [
+          "Psíquico",
+          "#f95587",
+          "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zm10 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z",
+        ],
+        bu: ["Inseto", "#a6b91a", "M12 2l8.5 5v10L12 22 3.5 17V7z"],
+        ro: ["Pedra", "#b6a136", "M12 2l8 7-3 12H7L4 9z"],
+        gh: [
+          "Fantasma",
+          "#735797",
+          "M12 2a7 7 0 0 0-7 7v13l3.5-3 3.5 3 3.5-3 3.5 3V9a7 7 0 0 0-7-7z",
+        ],
+        dr: ["Dragão", "#6f35fc", "M3 20 8 4l4 8 4-8 5 16-9-5z"],
+        da: ["Sombrio", "#705746", "M16 3a9 9 0 1 0 5 16A8 8 0 0 1 16 3z"],
+        st: [
+          "Aço",
+          "#b7b7ce",
+          "M8 2h8l6 6v8l-6 6H8l-6-6V8zm4 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z",
+        ],
+        fa: [
+          "Fada",
+          "#d685ad",
+          "M12 2l2.6 6.4L21 9l-5 4.5L17.5 21 12 17.3 6.5 21 8 13.5 3 9l6.4-.6z",
+        ],
+      };
+      const EVEN = ["ps", "ps", "ps"];
+      const GENS = [
+        {
+          n: "I",
+          reg: "Kanto",
+          s: 1,
+          d: `Bulbasaur:gr.po,Ivysaur:gr.po,Venusaur:gr.po,Charmander:fi,Charmeleon:fi,Charizard:fi.fl,Squirtle:wa,Wartortle:wa,Blastoise:wa,Caterpie:bu,Metapod:bu,Butterfree:bu.fl,Weedle:bu.po,Kakuna:bu.po,Beedrill:bu.po,Pidgey:no.fl,Pidgeotto:no.fl,Pidgeot:no.fl,Rattata:no,Raticate:no,Spearow:no.fl,Fearow:no.fl,Ekans:po,Arbok:po,Pikachu:el,Raichu:el,Sandshrew:gd,Sandslash:gd,Nidoran♀:po,Nidorina:po,Nidoqueen:po.gd,Nidoran♂:po,Nidorino:po,Nidoking:po.gd,Clefairy:fa,Clefable:fa,Vulpix:fi,Ninetales:fi,Jigglypuff:no.fa,Wigglytuff:no.fa,Zubat:po.fl,Golbat:po.fl,Oddish:gr.po,Gloom:gr.po,Vileplume:gr.po,Paras:bu.gr,Parasect:bu.gr,Venonat:bu.po,Venomoth:bu.po,Diglett:gd,Dugtrio:gd,Meowth:no,Persian:no,Psyduck:wa,Golduck:wa,Mankey:fg,Primeape:fg,Growlithe:fi,Arcanine:fi,Poliwag:wa,Poliwhirl:wa,Poliwrath:wa.fg,Abra:ps,Kadabra:ps,Alakazam:ps,Machop:fg,Machoke:fg,Machamp:fg,Bellsprout:gr.po,Weepinbell:gr.po,Victreebel:gr.po,Tentacool:wa.po,Tentacruel:wa.po,Geodude:ro.gd,Graveler:ro.gd,Golem:ro.gd,Ponyta:fi,Rapidash:fi,Slowpoke:wa.ps,Slowbro:wa.ps,Magnemite:el.st,Magneton:el.st,Farfetch'd:no.fl,Doduo:no.fl,Dodrio:no.fl,Seel:wa,Dewgong:wa.ic,Grimer:po,Muk:po,Shellder:wa,Cloyster:wa.ic,Gastly:gh.po,Haunter:gh.po,Gengar:gh.po,Onix:ro.gd,Drowzee:ps,Hypno:ps,Krabby:wa,Kingler:wa,Voltorb:el,Electrode:el,Exeggcute:gr.ps,Exeggutor:gr.ps,Cubone:gd,Marowak:gd,Hitmonlee:fg,Hitmonchan:fg,Lickitung:no,Koffing:po,Weezing:po,Rhyhorn:gd.ro,Rhydon:gd.ro,Chansey:no,Tangela:gr,Kangaskhan:no,Horsea:wa,Seadra:wa,Goldeen:wa,Seaking:wa,Staryu:wa,Starmie:wa.ps,Mr. Mime:ps.fa,Scyther:bu.fl,Jynx:ic.ps,Electabuzz:el,Magmar:fi,Pinsir:bu,Tauros:no,Magikarp:wa,Gyarados:wa.fl,Lapras:wa.ic,Ditto:no,Eevee:no,Vaporeon:wa,Jolteon:el,Flareon:fi,Porygon:no,Omanyte:ro.wa,Omastar:ro.wa,Kabuto:ro.wa,Kabutops:ro.wa,Aerodactyl:ro.fl,Snorlax:no,Articuno:ic.fl,Zapdos:el.fl,Moltres:fi.fl,Dratini:dr,Dragonair:dr,Dragonite:dr.fl,Mewtwo:ps,Mew:ps`,
+        },
+        {
+          n: "II",
+          reg: "Johto",
+          s: 152,
+          d: `Chikorita:gr,Bayleef:gr,Meganium:gr,Cyndaquil:fi,Quilava:fi,Typhlosion:fi,Totodile:wa,Croconaw:wa,Feraligatr:wa,Sentret:no,Furret:no,Hoothoot:no.fl,Noctowl:no.fl,Ledyba:bu.fl,Ledian:bu.fl,Spinarak:bu.po,Ariados:bu.po,Crobat:po.fl,Chinchou:wa.el,Lanturn:wa.el,Pichu:el,Cleffa:fa,Igglybuff:no.fa,Togepi:fa,Togetic:fa.fl,Natu:ps.fl,Xatu:ps.fl,Mareep:el,Flaaffy:el,Ampharos:el,Bellossom:gr,Marill:wa.fa,Azumarill:wa.fa,Sudowoodo:ro,Politoed:wa,Hoppip:gr.fl,Skiploom:gr.fl,Jumpluff:gr.fl,Aipom:no,Sunkern:gr,Sunflora:gr,Yanma:bu.fl,Wooper:wa.gd,Quagsire:wa.gd,Espeon:ps,Umbreon:da,Murkrow:da.fl,Slowking:wa.ps,Misdreavus:gh,Unown:ps,Wobbuffet:ps,Girafarig:no.ps,Pineco:bu,Forretress:bu.st,Dunsparce:no,Gligar:gd.fl,Steelix:st.gd,Snubbull:fa,Granbull:fa,Qwilfish:wa.po,Scizor:bu.st,Shuckle:bu.ro,Heracross:bu.fg,Sneasel:da.ic,Teddiursa:no,Ursaring:no,Slugma:fi,Magcargo:fi.ro,Swinub:ic.gd,Piloswine:ic.gd,Corsola:wa.ro,Remoraid:wa,Octillery:wa,Delibird:ic.fl,Mantine:wa.fl,Skarmory:st.fl,Houndour:da.fi,Houndoom:da.fi,Kingdra:wa.dr,Phanpy:gd,Donphan:gd,Porygon2:no,Stantler:no,Smeargle:no,Tyrogue:fg,Hitmontop:fg,Smoochum:ic.ps,Elekid:el,Magby:fi,Miltank:no,Blissey:no,Raikou:el,Entei:fi,Suicune:wa,Larvitar:ro.gd,Pupitar:ro.gd,Tyranitar:ro.da,Lugia:ps.fl,Ho-Oh:fi.fl,Celebi:ps.gr`,
+        },
+        {
+          n: "III",
+          reg: "Hoenn",
+          s: 252,
+          d: `Treecko:gr,Grovyle:gr,Sceptile:gr,Torchic:fi,Combusken:fi.fg,Blaziken:fi.fg,Mudkip:wa,Marshtomp:wa.gd,Swampert:wa.gd,Poochyena:da,Mightyena:da,Zigzagoon:no,Linoone:no,Wurmple:bu,Silcoon:bu,Beautifly:bu.fl,Cascoon:bu,Dustox:bu.po,Lotad:wa.gr,Lombre:wa.gr,Ludicolo:wa.gr,Seedot:gr,Nuzleaf:gr.da,Shiftry:gr.da,Taillow:no.fl,Swellow:no.fl,Wingull:wa.fl,Pelipper:wa.fl,Ralts:ps.fa,Kirlia:ps.fa,Gardevoir:ps.fa,Surskit:bu.wa,Masquerain:bu.fl,Shroomish:gr,Breloom:gr.fg,Slakoth:no,Vigoroth:no,Slaking:no,Nincada:bu.gd,Ninjask:bu.fl,Shedinja:bu.gh,Whismur:no,Loudred:no,Exploud:no,Makuhita:fg,Hariyama:fg,Azurill:no.fa,Nosepass:ro,Skitty:no,Delcatty:no,Sableye:da.gh,Mawile:st.fa,Aron:st.ro,Lairon:st.ro,Aggron:st.ro,Meditite:fg.ps,Medicham:fg.ps,Electrike:el,Manectric:el,Plusle:el,Minun:el,Volbeat:bu,Illumise:bu,Roselia:gr.po,Gulpin:po,Swalot:po,Carvanha:wa.da,Sharpedo:wa.da,Wailmer:wa,Wailord:wa,Numel:fi.gd,Camerupt:fi.gd,Torkoal:fi,Spoink:ps,Grumpig:ps,Spinda:no,Trapinch:gd,Vibrava:gd.dr,Flygon:gd.dr,Cacnea:gr,Cacturne:gr.da,Swablu:no.fl,Altaria:dr.fl,Zangoose:no,Seviper:po,Lunatone:ro.ps,Solrock:ro.ps,Barboach:wa.gd,Whiscash:wa.gd,Corphish:wa,Crawdaunt:wa.da,Baltoy:gd.ps,Claydol:gd.ps,Lileep:ro.gr,Cradily:ro.gr,Anorith:ro.bu,Armaldo:ro.bu,Feebas:wa,Milotic:wa,Castform:no,Kecleon:no,Shuppet:gh,Banette:gh,Duskull:gh,Dusclops:gh,Tropius:gr.fl,Chimecho:ps,Absol:da,Wynaut:ps,Snorunt:ic,Glalie:ic,Spheal:ic.wa,Sealeo:ic.wa,Walrein:ic.wa,Clamperl:wa,Huntail:wa,Gorebyss:wa,Relicanth:wa.ro,Luvdisc:wa,Bagon:dr,Shelgon:dr,Salamence:dr.fl,Beldum:st.ps,Metang:st.ps,Metagross:st.ps,Regirock:ro,Regice:ic,Registeel:st,Latias:dr.ps,Latios:dr.ps,Kyogre:wa,Groudon:gd,Rayquaza:dr.fl,Jirachi:st.ps,Deoxys:ps`,
+        },
+        {
+          n: "IV",
+          reg: "Sinnoh",
+          s: 387,
+          d: `Turtwig:gr,Grotle:gr,Torterra:gr.gd,Chimchar:fi,Monferno:fi.fg,Infernape:fi.fg,Piplup:wa,Prinplup:wa,Empoleon:wa.st,Starly:no.fl,Staravia:no.fl,Staraptor:no.fl,Bidoof:no,Bibarel:no.wa,Kricketot:bu,Kricketune:bu,Shinx:el,Luxio:el,Luxray:el,Budew:gr.po,Roserade:gr.po,Cranidos:ro,Rampardos:ro,Shieldon:ro.st,Bastiodon:ro.st,Burmy:bu,Wormadam:bu.gr,Mothim:bu.fl,Combee:bu.fl,Vespiquen:bu.fl,Pachirisu:el,Buizel:wa,Floatzel:wa,Cherubi:gr,Cherrim:gr,Shellos:wa,Gastrodon:wa.gd,Ambipom:no,Drifloon:gh.fl,Drifblim:gh.fl,Buneary:no,Lopunny:no,Mismagius:gh,Honchkrow:da.fl,Glameow:no,Purugly:no,Chingling:ps,Stunky:po.da,Skuntank:po.da,Bronzor:st.ps,Bronzong:st.ps,Bonsly:ro,Mime Jr.:ps.fa,Happiny:no,Chatot:no.fl,Spiritomb:gh.da,Gible:dr.gd,Gabite:dr.gd,Garchomp:dr.gd,Munchlax:no,Riolu:fg,Lucario:fg.st,Hippopotas:gd,Hippowdon:gd,Skorupi:po.bu,Drapion:po.da,Croagunk:po.fg,Toxicroak:po.fg,Carnivine:gr,Finneon:wa,Lumineon:wa,Mantyke:wa.fl,Snover:gr.ic,Abomasnow:gr.ic,Weavile:da.ic,Magnezone:el.st,Lickilicky:no,Rhyperior:gd.ro,Tangrowth:gr,Electivire:el,Magmortar:fi,Togekiss:fa.fl,Yanmega:bu.fl,Leafeon:gr,Glaceon:ic,Gliscor:gd.fl,Mamoswine:ic.gd,Porygon-Z:no,Gallade:ps.fg,Probopass:ro.st,Dusknoir:gh,Froslass:ic.gh,Rotom:el.gh,Uxie:ps,Mesprit:ps,Azelf:ps,Dialga:st.dr,Palkia:wa.dr,Heatran:fi.st,Regigigas:no,Giratina:gh.dr,Cresselia:ps,Phione:wa,Manaphy:wa,Darkrai:da,Shaymin:gr,Arceus:no`,
+        },
+        {
+          n: "V",
+          reg: "Unova",
+          s: 494,
+          d: `Victini:ps.fi,Snivy:gr,Servine:gr,Serperior:gr,Tepig:fi,Pignite:fi.fg,Emboar:fi.fg,Oshawott:wa,Dewott:wa,Samurott:wa,Patrat:no,Watchog:no,Lillipup:no,Herdier:no,Stoutland:no,Purrloin:da,Liepard:da,Pansage:gr,Simisage:gr,Pansear:fi,Simisear:fi,Panpour:wa,Simipour:wa,Munna:ps,Musharna:ps,Pidove:no.fl,Tranquill:no.fl,Unfezant:no.fl,Blitzle:el,Zebstrika:el,Roggenrola:ro,Boldore:ro,Gigalith:ro,Woobat:ps.fl,Swoobat:ps.fl,Drilbur:gd,Excadrill:gd.st,Audino:no,Timburr:fg,Gurdurr:fg,Conkeldurr:fg,Tympole:wa,Palpitoad:wa.gd,Seismitoad:wa.gd,Throh:fg,Sawk:fg,Sewaddle:bu.gr,Swadloon:bu.gr,Leavanny:bu.gr,Venipede:bu.po,Whirlipede:bu.po,Scolipede:bu.po,Cottonee:gr.fa,Whimsicott:gr.fa,Petilil:gr,Lilligant:gr,Basculin:wa,Sandile:gd.da,Krokorok:gd.da,Krookodile:gd.da,Darumaka:fi,Darmanitan:fi,Maractus:gr,Dwebble:bu.ro,Crustle:bu.ro,Scraggy:da.fg,Scrafty:da.fg,Sigilyph:ps.fl,Yamask:gh,Cofagrigus:gh,Tirtouga:wa.ro,Carracosta:wa.ro,Archen:ro.fl,Archeops:ro.fl,Trubbish:po,Garbodor:po,Zorua:da,Zoroark:da,Minccino:no,Cinccino:no,Gothita:ps,Gothorita:ps,Gothitelle:ps,Solosis:ps,Duosion:ps,Reuniclus:ps,Ducklett:wa.fl,Swanna:wa.fl,Vanillite:ic,Vanillish:ic,Vanilluxe:ic,Deerling:no.gr,Sawsbuck:no.gr,Emolga:el.fl,Karrablast:bu,Escavalier:bu.st,Foongus:gr.po,Amoonguss:gr.po,Frillish:wa.gh,Jellicent:wa.gh,Alomomola:wa,Joltik:bu.el,Galvantula:bu.el,Ferroseed:gr.st,Ferrothorn:gr.st,Klink:st,Klang:st,Klinklang:st,Tynamo:el,Eelektrik:el,Eelektross:el,Elgyem:ps,Beheeyem:ps,Litwick:gh.fi,Lampent:gh.fi,Chandelure:gh.fi,Axew:dr,Fraxure:dr,Haxorus:dr,Cubchoo:ic,Beartic:ic,Cryogonal:ic,Shelmet:bu,Accelgor:bu,Stunfisk:gd.el,Mienfoo:fg,Mienshao:fg,Druddigon:dr,Golett:gd.gh,Golurk:gd.gh,Pawniard:da.st,Bisharp:da.st,Bouffalant:no,Rufflet:no.fl,Braviary:no.fl,Vullaby:da.fl,Mandibuzz:da.fl,Heatmor:fi,Durant:bu.st,Deino:da.dr,Zweilous:da.dr,Hydreigon:da.dr,Larvesta:bu.fi,Volcarona:bu.fi,Cobalion:st.fg,Terrakion:ro.fg,Virizion:gr.fg,Tornadus:fl,Thundurus:el.fl,Reshiram:dr.fi,Zekrom:dr.el,Landorus:gd.fl,Kyurem:dr.ic,Keldeo:wa.fg,Meloetta:no.ps,Genesect:bu.st`,
+        },
+        {
+          n: "VI",
+          reg: "Kalos",
+          s: 650,
+          d: `Chespin:gr,Quilladin:gr,Chesnaught:gr.fg,Fennekin:fi,Braixen:fi,Delphox:fi.ps,Froakie:wa,Frogadier:wa,Greninja:wa.da,Bunnelby:no,Diggersby:no.gd,Fletchling:no.fl,Fletchinder:fi.fl,Talonflame:fi.fl,Scatterbug:bu,Spewpa:bu,Vivillon:bu.fl,Litleo:fi.no,Pyroar:fi.no,Flabébé:fa,Floette:fa,Florges:fa,Skiddo:gr,Gogoat:gr,Pancham:fg,Pangoro:fg.da,Furfrou:no,Espurr:ps,Meowstic:ps,Honedge:st.gh,Doublade:st.gh,Aegislash:st.gh,Spritzee:fa,Aromatisse:fa,Swirlix:fa,Slurpuff:fa,Inkay:da.ps,Malamar:da.ps,Binacle:ro.wa,Barbaracle:ro.wa,Skrelp:po.wa,Dragalge:po.dr,Clauncher:wa,Clawitzer:wa,Helioptile:el.no,Heliolisk:el.no,Tyrunt:ro.dr,Tyrantrum:ro.dr,Amaura:ro.ic,Aurorus:ro.ic,Sylveon:fa,Hawlucha:fg.fl,Dedenne:el.fa,Carbink:ro.fa,Goomy:dr,Sliggoo:dr,Goodra:dr,Klefki:st.fa,Phantump:gh.gr,Trevenant:gh.gr,Pumpkaboo:gh.gr,Gourgeist:gh.gr,Bergmite:ic,Avalugg:ic,Noibat:fl.dr,Noivern:fl.dr,Xerneas:fa,Yveltal:da.fl,Zygarde:dr.gd,Diancie:ro.fa,Hoopa:ps.gh,Volcanion:fi.wa`,
+        },
+        {
+          n: "VII",
+          reg: "Alola",
+          s: 722,
+          d: `Rowlet:gr.fl,Dartrix:gr.fl,Decidueye:gr.gh,Litten:fi,Torracat:fi,Incineroar:fi.da,Popplio:wa,Brionne:wa,Primarina:wa.fa,Pikipek:no.fl,Trumbeak:no.fl,Toucannon:no.fl,Yungoos:no,Gumshoos:no,Grubbin:bu,Charjabug:bu.el,Vikavolt:bu.el,Crabrawler:fg,Crabominable:fg.ic,Oricorio:fi.fl,Cutiefly:bu.fa,Ribombee:bu.fa,Rockruff:ro,Lycanroc:ro,Wishiwashi:wa,Mareanie:po.wa,Toxapex:po.wa,Mudbray:gd,Mudsdale:gd,Dewpider:wa.bu,Araquanid:wa.bu,Fomantis:gr,Lurantis:gr,Morelull:gr.fa,Shiinotic:gr.fa,Salandit:po.fi,Salazzle:po.fi,Stufful:no.fg,Bewear:no.fg,Bounsweet:gr,Steenee:gr,Tsareena:gr,Comfey:fa,Oranguru:no.ps,Passimian:fg,Wimpod:bu.wa,Golisopod:bu.wa,Sandygast:gh.gd,Palossand:gh.gd,Pyukumuku:wa,Type: Null:no,Silvally:no,Minior:ro.fl,Komala:no,Turtonator:fi.dr,Togedemaru:el.st,Mimikyu:gh.fa,Bruxish:wa.ps,Drampa:no.dr,Dhelmise:gh.gr,Jangmo-o:dr,Hakamo-o:dr.fg,Kommo-o:dr.fg,Tapu Koko:el.fa,Tapu Lele:ps.fa,Tapu Bulu:gr.fa,Tapu Fini:wa.fa,Cosmog:ps,Cosmoem:ps,Solgaleo:ps.st,Lunala:ps.gh,Nihilego:ro.po,Buzzwole:bu.fg,Pheromosa:bu.fg,Xurkitree:el,Celesteela:st.fl,Kartana:gr.st,Guzzlord:da.dr,Necrozma:ps,Magearna:st.fa,Marshadow:fg.gh,Poipole:po,Naganadel:po.dr,Stakataka:ro.st,Blacephalon:fi.gh,Zeraora:el,Meltan:st,Melmetal:st`,
+        },
+        {
+          n: "VIII",
+          reg: "Galar e Hisui",
+          s: 810,
+          d: `Grookey:gr,Thwackey:gr,Rillaboom:gr,Scorbunny:fi,Raboot:fi,Cinderace:fi,Sobble:wa,Drizzile:wa,Inteleon:wa,Skwovet:no,Greedent:no,Rookidee:fl,Corvisquire:fl,Corviknight:fl.st,Blipbug:bu,Dottler:bu.ps,Orbeetle:bu.ps,Nickit:da,Thievul:da,Gossifleur:gr,Eldegoss:gr,Wooloo:no,Dubwool:no,Chewtle:wa,Drednaw:wa.ro,Yamper:el,Boltund:el,Rolycoly:ro,Carkol:ro.fi,Coalossal:ro.fi,Applin:gr.dr,Flapple:gr.dr,Appletun:gr.dr,Silicobra:gd,Sandaconda:gd,Cramorant:fl.wa,Arrokuda:wa,Barraskewda:wa,Toxel:el.po,Toxtricity:el.po,Sizzlipede:fi.bu,Centiskorch:fi.bu,Clobbopus:fg,Grapploct:fg,Sinistea:gh,Polteageist:gh,Hatenna:ps,Hattrem:ps,Hatterene:ps.fa,Impidimp:da.fa,Morgrem:da.fa,Grimmsnarl:da.fa,Obstagoon:da.no,Perrserker:st,Cursola:gh,Sirfetch'd:fg,Mr. Rime:ic.ps,Runerigus:gd.gh,Milcery:fa,Alcremie:fa,Falinks:fg,Pincurchin:el,Snom:ic.bu,Frosmoth:ic.bu,Stonjourner:ro,Eiscue:ic,Indeedee:ps.no,Morpeko:el.da,Cufant:st,Copperajah:st,Dracozolt:el.dr,Arctozolt:el.ic,Dracovish:wa.dr,Arctovish:wa.ic,Duraludon:st.dr,Dreepy:dr.gh,Drakloak:dr.gh,Dragapult:dr.gh,Zacian:fa,Zamazenta:fg,Eternatus:po.dr,Kubfu:fg,Urshifu:fg.da,Zarude:da.gr,Regieleki:el,Regidrago:dr,Glastrier:ic,Spectrier:gh,Calyrex:ps.gr,Wyrdeer:no,Kleavor:bu.ro,Ursaluna:gd.no,Basculegion:wa.gh,Sneasler:fg.po,Overqwil:da.po,Enamorus:fa.fl`,
+        },
+        {
+          n: "IX",
+          reg: "Paldea",
+          s: 906,
+          d: `Sprigatito:gr,Floragato:gr,Meowscarada:gr.da,Fuecoco:fi,Crocalor:fi,Skeledirge:fi.gh,Quaxly:wa,Quaxwell:wa,Quaquaval:wa.fg,Lechonk:no,Oinkologne:no,Tarountula:bu,Spidops:bu,Nymble:bu,Lokix:bu.da,Pawmi:el,Pawmo:el.fg,Pawmot:el.fg,Tandemaus:no,Maushold:no,Fidough:fa,Dachsbun:fa,Smoliv:gr.no,Dolliv:gr.no,Arboliva:gr.no,Squawkabilly:no.fl,Nacli:ro,Naclstack:ro,Garganacl:ro,Charcadet:fi,Armarouge:fi.ps,Ceruledge:fi.gh,Tadbulb:el,Bellibolt:el,Wattrel:el.fl,Kilowattrel:el.fl,Maschiff:da,Mabosstiff:da,Shroodle:po.no,Grafaiai:po.no,Bramblin:gr.gh,Brambleghast:gr.gh,Toedscool:gd.gr,Toedscruel:gd.gr,Klawf:ro,Capsakid:gr,Scovillain:gr.fi,Rellor:bu,Rabsca:bu.ps,Flittle:ps,Espathra:ps,Tinkatink:fa.st,Tinkatuff:fa.st,Tinkaton:fa.st,Wiglett:wa,Wugtrio:wa,Bombirdier:fl.da,Finizen:wa,Palafin:wa,Varoom:st.po,Revavroom:st.po,Cyclizar:dr.no,Orthworm:st,Glimmet:ro.po,Glimmora:ro.po,Greavard:gh,Houndstone:gh,Flamigo:fl.fg,Cetoddle:ic,Cetitan:ic,Veluza:wa.ps,Dondozo:wa,Tatsugiri:dr.wa,Annihilape:fg.gh,Clodsire:po.gd,Farigiraf:no.ps,Dudunsparce:no,Kingambit:da.st,Great Tusk:gd.fg,Scream Tail:fa.ps,Brute Bonnet:gr.da,Flutter Mane:gh.fa,Slither Wing:bu.fg,Sandy Shocks:el.gd,Iron Treads:gd.st,Iron Bundle:ic.wa,Iron Hands:fg.el,Iron Jugulis:da.fl,Iron Moth:fi.po,Iron Thorns:ro.el,Frigibax:dr.ic,Arctibax:dr.ic,Baxcalibur:dr.ic,Gimmighoul:gh,Gholdengo:st.gh,Wo-Chien:da.gr,Chien-Pao:da.ic,Ting-Lu:da.gd,Chi-Yu:da.fi,Roaring Moon:dr.da,Koraidon:fg.dr,Miraidon:el.dr,Walking Wake:wa.dr,Iron Leaves:gr.ps,Dipplin:gr.dr,Poltchageist:gr.gh,Sinistcha:gr.gh,Okidogi:po.fg,Munkidori:po.ps,Fezandipiti:po.fa,Ogerpon:gr,Archaludon:st.dr,Hydrapple:gr.dr,Gouging Fire:fi.dr,Raging Bolt:el.dr,Iron Boulder:ro.ps,Iron Crown:st.ps,Terapagos:no,Pecharunt:po.gh`,
+        },
+      ];
+      const SET = (s) => new Set(s.split(",").map(Number));
+      const MYTHIC = SET(
+        "151,251,385,386,489,490,491,492,493,494,647,648,649,719,720,721,801,802,807,808,809,893,1025",
+      );
+      const LEGEND = SET(
+        "144,145,146,150,243,244,245,249,250,377,378,379,380,381,382,383,384,480,481,482,483,484,485,486,487,488,638,639,640,641,642,643,644,645,646,716,717,718,785,786,787,788,789,790,791,792,800,888,889,890,891,892,894,895,896,897,898,905,1001,1002,1003,1004,1007,1008,1014,1015,1016,1017,1024",
+      );
+      const UB = SET("793,794,795,796,797,798,799,803,804,805,806");
+      const PARADOX = SET(
+        "984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010,1020,1021,1022,1023",
+      );
+      const PSEUDO = SET("149,248,373,376,445,635,706,784,887,998");
+      const STARTER = [
+        [1, 9],
+        [152, 160],
+        [252, 260],
+        [387, 395],
+        [495, 503],
+        [650, 658],
+        [722, 730],
+        [810, 818],
+        [906, 914],
+      ];
+      const isStarter = (id) => STARTER.some(([a, b]) => id >= a && id <= b);
+      const MEGA = SET(
+        "3,6,9,15,18,26,36,65,71,80,94,115,121,127,130,142,149,150,154,160,181,208,212,214,227,229,248,254,257,260,282,302,303,306,308,310,319,323,334,354,358,359,362,373,376,380,381,384,398,428,445,448,460,475,478,485,491,500,530,531,545,560,604,609,623,652,655,658,668,670,678,687,689,691,701,718,719,740,768,780,807,870,970,998,934",
+      );
+      MEGA.delete(970);
+      MEGA.delete(934);
+      MEGA.delete(623);
+      const GMAX = SET(
+        "3,6,9,12,25,52,68,94,99,131,133,143,569,809,812,815,818,823,826,834,839,841,842,844,849,851,858,861,869,879,884,892",
+      );
+      const PRIMAL = SET("382,383");
+      const REG = {
+        Alola: SET("19,20,26,27,28,37,38,50,51,52,53,74,75,76,88,89,103,105"),
+        Galar: SET(
+          "52,77,78,79,80,83,110,122,144,145,146,199,222,263,264,554,555,562,618",
+        ),
+        Hisui: SET(
+          "58,59,100,101,157,211,215,503,549,570,571,628,705,706,713,724",
+        ),
+        Paldea: SET("128,194"),
+      };
+      const MOVIES = {
+        25: "Pokémon: I Choose You!",
+        150: "Mewtwo Strikes Back",
+        151: "Mewtwo Strikes Back e Lucario and the Mystery of Mew",
+        249: "Pokémon: The Movie 2000",
+        244: "Spell of the Unown (Entei)",
+        245: "Pokémon 3 e Pokémon Heroes (Suicune em 3)",
+        251: "Pokémon 4Ever",
+        380: "Pokémon Heroes",
+        381: "Pokémon Heroes",
+        385: "Jirachi: Wish Maker",
+        386: "Destiny Deoxys",
+        448: "Lucario and the Mystery of Mew",
+        483: "The Rise of Darkrai",
+        484: "The Rise of Darkrai",
+        487: "Giratina and the Sky Warrior",
+        489: "Manaphy and the Temple of the Sea",
+        490: "Manaphy and the Temple of the Sea",
+        491: "The Rise of Darkrai",
+        492: "Arceus and the Jewel of Life (Shaymin: Gratitude)",
+        493: "Arceus and the Jewel of Life",
+        570: "Zoroark: Master of Illusions",
+        571: "Zoroark: Master of Illusions",
+        646: "Kyurem VS the Sword of Justice",
+        647: "Kyurem VS the Sword of Justice",
+        649: "Genesect and the Legend Awakened",
+        643: "Victini and Reshiram / Zekrom",
+        644: "Victini and Reshiram / Zekrom",
+        494: "Victini and Reshiram / Zekrom",
+        719: "Diancie and the Cocoon of Destruction",
+        720: "Hoopa and the Clash of Ages",
+        721: "Volcanion and the Mechanical Marvel",
+        801: "Pokémon: The Power of Us",
+        802: "Pokémon: I Choose You!",
+        807: "Pokémon: Secrets of the Jungle",
+        893: "Pokémon: Secrets of the Jungle",
+      };
+      const SHINYLOCK = SET("893,1025");
+      const DESC = {
+        1: "Carrega uma semente nas costas desde que nasce. Ela absorve a luz do sol e cresce junto com ele, até se abrir em uma grande flor.",
+        4: "A chama na ponta da cauda mostra o humor e a saúde do Pokémon. Se ela se apagar, ele corre sério perigo.",
+        6: "Cospe um fogo capaz de derreter rochas. Voa alto em busca de rivais à altura e não costuma enfrentar quem é fraco.",
+        7: "O casco nas costas o protege e deixa os jatos d'água mais precisos. Ao se sentir ameaçado, ele se esconde lá dentro.",
+        9: "Os canhões do casco disparam jatos d'água fortes o bastante para furar aço. Usa o próprio peso para derrubar adversários.",
+        25: "Guarda eletricidade nas bochechas e a libera em descargas quando se sente em perigo. Vários deles juntos podem provocar tempestades.",
+        39: "Canta uma melodia que faz dormir quem a ouve. Se ninguém cochilar, ele infla de raiva e canta ainda mais forte.",
+        94: "Se esconde nas sombras e imita a silhueta de pessoas. Dizem que um frio repentino no ar é sinal de que ele está por perto.",
+        130: "Quando sua fúria explode, só se acalma depois de tudo ao redor ter sido destruído. Poucos Pokémon são tão temidos.",
+        131: "Gentil e inteligente, leva pessoas pelo mar nas costas. Entende a fala humana e canta com voz suave.",
+        133: "Sua genética instável permite evoluir para formas bem diferentes, de acordo com o ambiente e as pedras que encontra.",
+        143: "Come mais de 400 kg de comida por dia e dorme logo depois. Só acorda para comer de novo.",
+        149: "Apesar do tamanho, dá a volta ao mundo em poucas horas. É gentil e, segundo relatos, já salvou marinheiros em naufrágios.",
+        150: "Criado pela ciência a partir do DNA de Mew. Poderoso e solitário, carrega muitas dúvidas sobre a própria existência.",
+        151: "Dizem que carrega o código genético de todos os Pokémon. É tão tímido que raramente se deixa ver, e pode ficar invisível.",
+        249: "Domina os mares. Um bater de asas pode causar tempestades que duram dias. Costuma ficar no fundo do oceano, em silêncio.",
+        250: "Suas asas brilham em sete cores. Dizem que traz felicidade a quem o vê voando sobre o arco-íris depois da chuva.",
+        251: "Viaja no tempo. Aparece quando o futuro é bom e deixa as florestas mais verdes por onde passa.",
+        282: "Protege seu treinador com poderes psíquicos, até com a própria vida. Consegue criar mini buracos negros.",
+        350: "Considerada a mais bela entre os Pokémon. Sua beleza acalma conflitos e leva paz a quem a vê.",
+        384: "Vive há milhões de anos na camada de ozônio. Só desce à Terra quando Kyogre e Groudon brigam.",
+        445: "Voa em velocidade supersônica e tem asas afiadas como lâminas. Quando decide atacar, ninguém foge.",
+        448: "Sente as auras dos seres vivos a quilômetros de distância. Lê emoções e luta com orgulho e lealdade ao mestre.",
+        483: "Controla o fluxo do tempo. Dizem que o universo começou a correr quando ele respirou pela primeira vez.",
+        484: "Tem o poder de distorcer o espaço. Acredita-se que participou da criação do universo.",
+        487: "Foi banido para o Mundo Reverso por sua violência. Vive entre dimensões, observando em silêncio.",
+        493: "Dizem que criou o universo com mil braços. É considerado o Pokémon original, de quem todos descendem.",
+        658: "Lança shurikens d'água com muita precisão. Salta tão rápido que mal se vê. Um verdadeiro ninja.",
+        700: "Enrola as fitas nos braços de quem ama. Libera ondas calmantes que acalmam os inimigos.",
+        716: "Dizem que traz vida eterna. Aparece como uma árvore depois de mil anos dormindo.",
+        717: "Quando suga a vida ao redor, abre as asas. Está ligado à destruição.",
+        718: "Guardião do ecossistema. Quando percebe o desequilíbrio, aparece com poderes imensos.",
+        719: "Um diamante vivo, de brilho encantador. Dizem ser uma mutação de Carbink.",
+        778: "Quer ser amado como Pikachu e por isso se cobre com um pano. Quem vê por baixo do pano leva um mau-olhado.",
+        791: "Emite luz do corpo, que ilumina o céu e abre portais entre mundos.",
+        792: "Dizem que traz a noite. Asas absorvem a luz e abrem passagens para outros mundos.",
+        800: "Absorve luz para recuperar a forma. Sua fome de brilho consome o céu.",
+        888: "Empunha uma espada que corta qualquer coisa. É herói de uma antiga lenda de Galar.",
+        889: "Defende com um escudo de metal inquebrável. É herói de uma antiga lenda de Galar.",
+        890: "Veio do espaço há milhares de anos. O poder dele causou o Dia Mais Sombrio em Galar.",
+        892: "Mestre das artes marciais, treina em torres para aperfeiçoar os golpes.",
+        1007: "Pokémon antigo que luta com muita energia. Segundo lendas, foi rei do mundo.",
+        1008: "Pokémon do futuro, que carrega uma máquina de energia. Considerado uma joia da tecnologia.",
+        1024: "Tem o poder de transformar cristais em formas. Se esconde na cratera de Tera.",
+        1025: "Controla a mente de quem come seus mochis. Faz as pessoas dançarem à sua vontade.",
+      };
+      const FLAVOR = {
+        no: [
+          "Adaptável e comum em muitos lugares, é fácil de encontrar e de conviver.",
+          "Sem grandes truques, mas confiável em qualquer situação.",
+          "Tem uma natureza tranquila e costuma se dar bem com pessoas.",
+        ],
+        fi: [
+          "Um calor constante vem do corpo, e as chamas mudam de acordo com o humor.",
+          "Esquenta o ambiente por onde passa e não gosta de chuva.",
+          "Seu fogo cresce quando fica empolgado em uma batalha.",
+        ],
+        wa: [
+          "Se sente em casa perto de rios, lagos ou no mar.",
+          "A pele úmida ajuda a se mover com rapidez na água.",
+          "Costuma ser calmo, mas ataca com força se for provocado.",
+        ],
+        el: [
+          "Acumula eletricidade no corpo e a solta em descargas rápidas.",
+          "Faíscas aparecem quando fica animado ou irritado.",
+          "Gosta de lugares com tempestade e é sensível a metais.",
+        ],
+        gr: [
+          "Absorve luz do sol e usa a energia para crescer e se defender.",
+          "Perfumes e esporos ajudam a atrair presas ou espantar rivais.",
+          "Cresce melhor em solo úmido e rico em nutrientes.",
+        ],
+        ic: [
+          "O corpo gelado se mantém firme mesmo em locais muito frios.",
+          "Cria cristais de gelo ao respirar e adora montanhas nevadas.",
+          "Quase não sente calor e evita regiões quentes.",
+        ],
+        fg: [
+          "Treina todos os dias para ficar mais forte e disciplinado.",
+          "Luta com orgulho e respeita adversários que dão o melhor.",
+          "Tem músculos fortes e um espírito que nunca desiste.",
+        ],
+        po: [
+          "Libera toxinas que podem ser perigosas para quem encostar.",
+          "Usa veneno para se defender e deixar o inimigo fraco.",
+          "Seu cheiro forte afasta predadores.",
+        ],
+        gd: [
+          "Vive em solo seco e usa a terra para se esconder e atacar.",
+          "Resistente, cava túneis com facilidade.",
+          "Sente vibrações no chão e percebe quem se aproxima.",
+        ],
+        fl: [
+          "Ama o céu e voa por longas distâncias sem descansar.",
+          "As asas fortes seguem as correntes de ar com precisão.",
+          "Costuma pousar em lugares altos para vigiar o território.",
+        ],
+        ps: [
+          "Usa poderes da mente para sentir o que os outros pensam.",
+          "Tem sono leve, e a mente nunca descansa de verdade.",
+          "Move objetos e cria ilusões só com a concentração.",
+        ],
+        bu: [
+          "Se esconde entre folhas e troncos e passa por transformações no crescimento.",
+          "Pequeno, mas muito resistente e cheio de energia.",
+          "Vive em grupos e age em conjunto contra ameaças.",
+        ],
+        ro: [
+          "Corpo duro como rocha, difícil de ferir.",
+          "Cresce lentamente, e a idade endurece ainda mais o corpo.",
+          "Vive em cavernas e montanhas, longe de agitação.",
+        ],
+        gh: [
+          "Aparece à noite e se esconde nas sombras.",
+          "Gosta de assustar pessoas, mas quase nunca machuca.",
+          "Sente a presença de quem está por perto sem ser notado.",
+        ],
+        dr: [
+          "Raro e poderoso, dizem que carrega lendas antigas.",
+          "Tem um corpo forte, respeitado por quem o vê.",
+          "Orgulhoso, só obedece a quem prova ser digno.",
+        ],
+        da: [
+          "Esperto e discreto, age principalmente à noite.",
+          "Usa astúcia e emboscadas para vencer batalhas.",
+          "Desconfia de estranhos e é muito leal a quem confia.",
+        ],
+        st: [
+          "Corpo de metal resistente que quase nada consegue arranhar.",
+          "Reflete a luz e aguenta golpes pesados.",
+          "Sua defesa é famosa, mas o peso o deixa mais lento.",
+        ],
+        fa: [
+          "Tem charme e energia mágica que encantam quem está perto.",
+          "Gosta de brilho, doçura e de lugares calmos.",
+          "Os poderes de fada surgem quando está feliz ou protege alguém.",
+        ],
+      };
+      const MOVIE_ENTRIES = new Set(Object.keys(MOVIES).map(Number));
+      const MON = [];
+      GENS.forEach((g, gi) => {
+        g.d.split(",").forEach((e, i) => {
+          const k = e.lastIndexOf(":");
+          const name = e.slice(0, k),
+            t = e.slice(k + 1).split(".");
+          MON.push({ id: g.s + i, name, t, g: gi });
+        });
+        g.e = g.s + g.d.split(",").length - 1;
+      });
+      const $ = (s) => document.querySelector(s);
+      const norm = (s) =>
+        s
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+      const lum = (h) => {
+        const n = parseInt(h.slice(1), 16),
+          f = (v) => {
+            v /= 255;
+            return v <= 0.03928
+              ? v / 12.92
+              : Math.pow((v + 0.055) / 1.055, 2.4);
+          };
+        return (
+          0.2126 * f(n >> 16) + 0.7152 * f((n >> 8) & 255) + 0.0722 * f(n & 255)
+        );
+      };
+      const fgFor = (h) => (lum(h) > 0.28 ? "#10151f" : "#ffffff");
+      const pad = (n) => String(n).padStart(4, "0");
+      const glyph = (c, cls = "") =>
+        `<svg viewBox="0 0 24 24" ${cls ? `class="${cls}"` : ""} aria-hidden="true"><path fill-rule="evenodd" d="${TYPES[c][2]}"/></svg>`;
+      const tag = (c) =>
+        `<span class="tag" style="background:${TYPES[c][1]};color:${fgFor(TYPES[c][1])}">${glyph(c)}${TYPES[c][0]}</span>`;
+      function rarity(id) {
+        if (MYTHIC.has(id))
+          return { k: "Mítico", c: "#ff74d4", f: "#2a0720", s: 5 };
+        if (LEGEND.has(id))
+          return { k: "Lendário", c: "#ffcb05", f: "#251d00", s: 5 };
+        if (UB.has(id))
+          return { k: "Ultra Entidade", c: "#4ee3c1", f: "#032a22", s: 4 };
+        if (PARADOX.has(id))
+          return { k: "Paradoxo", c: "#ff8a4d", f: "#2e1000", s: 4 };
+        if (PSEUDO.has(id))
+          return { k: "Pseudo-lendário", c: "#8fb6ff", f: "#06183b", s: 3 };
+        if (isStarter(id))
+          return { k: "Inicial", c: "#9be36f", f: "#0f2606", s: 2 };
+        return { k: "Comum", c: "#c9d1e4", f: "#141a28", s: 1 };
+      }
+      function forms(id) {
+        const o = [];
+        if (MEGA.has(id))
+          o.push([
+            "mega",
+            id === 6 || id === 150 || id === 26
+              ? "Mega X / Y"
+              : "Mega Evolução",
+          ]);
+        if (PRIMAL.has(id)) o.push(["prim", "Reversão Primal"]);
+        if (GMAX.has(id)) o.push(["gmax", "Gigamax"]);
+        for (const r in REG)
+          if (REG[r].has(id)) o.push(["reg", "Forma de " + r]);
+        return o;
+      }
+      function movie(id) {
+        return MOVIES[id] || null;
+      }
+      function describe(m) {
+        if (DESC[m.id]) return DESC[m.id];
+        const t = m.t[0],
+          f = FLAVOR[t][m.id % 3];
+        return `${m.name} é um Pokémon do tipo ${TYPES[t][0]}${m.t[1] ? " e " + TYPES[m.t[1]][0] : ""}, registrado na Pokédex sob o número ${pad(m.id)}. ${f}`;
+      }
+      function emblem(m) {
+        const c1 = TYPES[m.t[0]][1],
+          c2 = TYPES[m.t[1] || m.t[0]][1];
+        const gl = TYPES[m.t[0]][2];
+        return `<defs>
+   <radialGradient id="eg" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+   <linearGradient id="eb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="#0b0f1a" opacity=".35"/>
+  <circle cx="100" cy="100" r="86" fill="url(#eb)" stroke="#fff" stroke-width="6"/>
+  <path d="M14 100h172" stroke="#fff" stroke-width="6" opacity=".9"/>
+  <circle cx="100" cy="100" r="86" fill="url(#eg)"/>
+  <circle cx="100" cy="100" r="26" fill="#fff" opacity=".18"/>
+  <g transform="translate(44 44) scale(4.67)"><path class="glyph" fill-rule="evenodd" d="${gl}"/></g>
+  <path class="sp" d="M34 40l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#fff6c8"/>
+  <path class="sp" d="M160 56l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff6c8"/>
+  <path class="sp" d="M150 150l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="#fff6c8"/>`;
+      }
+      function glyphURL(c) {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#fff" fill-rule="evenodd" d="${TYPES[c][2]}"/></svg>`;
+        return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+      }
+      const st = {
+        gen: 0,
+        q: "",
+        type: "",
+        rar: "",
+        form: "",
+        sort: "n",
+        sel: 25,
+        shiny: false,
+        list: [],
+      };
+      const gensEl = $("#gens");
+      function buildTabs() {
+        const opts = [
+          { k: "all", a: "Todas", b: "1–1025" },
+          ...GENS.map((g, i) => ({
+            k: i,
+            a: "Geração " + g.n,
+            b: g.reg + " · " + g.s + "–" + g.e,
+          })),
+          { k: "movie", a: "Filmes", b: "Estrelas das telonas" },
+        ];
+        gensEl.innerHTML = opts
+          .map(
+            (o) =>
+              `<button class="gen" data-k="${o.k}" aria-pressed="false"><b>${o.a}</b><small>${o.b}</small></button>`,
+          )
+          .join("");
+        gensEl.addEventListener("click", (e) => {
+          const b = e.target.closest(".gen");
+          if (!b) return;
+          st.gen =
+            b.dataset.k === "all" || b.dataset.k === "movie"
+              ? b.dataset.k
+              : +b.dataset.k;
+          render();
+        });
+      }
+      function buildSelects() {
+        $("#ft").innerHTML =
+          '<option value="">Todos os tipos</option>' +
+          Object.keys(TYPES)
+            .map((k) => `<option value="${k}">${TYPES[k][0]}</option>`)
+            .join("");
+        $("#fr").innerHTML =
+          '<option value="">Todas</option>' +
+          [
+            "Comum",
+            "Inicial",
+            "Pseudo-lendário",
+            "Paradoxo",
+            "Ultra Entidade",
+            "Lendário",
+            "Mítico",
+          ]
+            .map((k) => `<option>${k}</option>`)
+            .join("");
+        $("#ff").innerHTML =
+          '<option value="">Todas</option><option value="mega">Tem Mega Evolução</option><option value="gmax">Tem Gigamax</option><option value="reg">Tem forma regional</option><option value="prim">Reversão Primal</option>';
+      }
+      function filtered() {
+        const q = norm(st.q.trim().replace(/^#/, ""));
+        let l = MON.filter((m) => {
+          if (st.gen === "movie") {
+            if (!MOVIE_ENTRIES.has(m.id)) return false;
+          } else if (st.gen !== "all" && m.g !== st.gen) return false;
+          if (st.type && !m.t.includes(st.type)) return false;
+          if (st.rar && rarity(m.id).k !== st.rar) return false;
+          if (st.form) {
+            const f = forms(m.id).map((x) => x[0]);
+            if (!f.includes(st.form)) return false;
+          }
+          if (q) {
+            if (/^\d+$/.test(q)) {
+              if (!String(m.id).includes(q) && pad(m.id).indexOf(q) < 0)
+                return false;
+            } else if (!norm(m.name).includes(q)) return false;
+          }
+          return true;
+        });
+        if (st.sort === "a")
+          l = [...l].sort((a, b) => a.name.localeCompare(b.name, "pt"));
+        return l;
+      }
+      function render() {
+        gensEl
+          .querySelectorAll(".gen")
+          .forEach((b) =>
+            b.setAttribute(
+              "aria-pressed",
+              String(String(b.dataset.k) === String(st.gen)),
+            ),
+          );
+        st.list = filtered();
+        $("#count").textContent = pad(st.list.length).slice(-4);
+        $("#shown").textContent = st.list.length;
+        const g = st.gen;
+        $("#gl").textContent =
+          g === "all"
+            ? "Todas as gerações, Kanto a Paldea"
+            : g === "movie"
+              ? "Pokémon que aparecem nos filmes"
+              : `Geração ${GENS[g].n} · ${GENS[g].reg} · Nº ${GENS[g].s} a ${GENS[g].e}`;
+        const grid = $("#grid");
+        if (!st.list.length) {
+          grid.innerHTML =
+            '<div class="empty">Nenhum Pokémon encontrado com esses filtros. Tente limpar a busca ou trocar o tipo.</div>';
+          return;
+        }
+        grid.innerHTML = st.list
+          .map((m) => {
+            const c = TYPES[m.t[0]][1];
+            const mk = [];
+            if (MEGA.has(m.id)) mk.push("M");
+            if (GMAX.has(m.id)) mk.push("G");
+            if (movie(m.id)) mk.push("F");
+            return `<button class="card" data-id="${m.id}" style="--cc:${c}" ${m.id === st.sel ? 'aria-current="true"' : ""}>
+      <span class="mk">${mk.map((x) => `<i>${x}</i>`).join("")}</span>
+      <span class="no">Nº ${pad(m.id)}</span><span class="nm">${m.name}</span>
+      <span class="ty">${m.t.map(tag).join("")}</span></button>`;
+          })
+          .join("");
+      }
+      function show(id, open) {
+        const m = MON[id - 1];
+        if (!m) return;
+        st.sel = id;
+        const c1 = TYPES[m.t[0]][1],
+          c2 = TYPES[m.t[1] || m.t[0]][1];
+        const sc = $("#screen");
+        sc.style.setProperty("--c1", c1);
+        sc.style.setProperty(
+          "--c2",
+          m.t[1] ? c2 : `color-mix(in srgb,${c1} 45%,#0b0f1a)`,
+        );
+        $("#detail").style.setProperty("--glyph", glyphURL(m.t[0]));
+        sc.style.setProperty("--hue", ((id * 47) % 120) + 30 + "deg");
+        $("#dexno").textContent = "Nº " + pad(id);
+        $("#name").textContent = m.name;
+        $("#types").innerHTML = m.t.map(tag).join("");
+        $("#emblem").innerHTML = emblem(m);
+        $("#emblem").setAttribute(
+          "aria-label",
+          "Emblema do tipo " + TYPES[m.t[0]][0] + " de " + m.name,
+        );
+        $("#desc").textContent = describe(m);
+        const r = rarity(id);
+        $("#rar").innerHTML =
+          `<span class="rar" style="background:${r.c};color:${r.f}">${r.k}</span><div class="stars" aria-label="${r.s} de 5 estrelas">${[1, 2, 3, 4, 5].map((i) => `<svg viewBox="0 0 24 24" class="${i <= r.s ? "on" : ""}"><path d="${TYPES.fa[2]}"/></svg>`).join("")}</div>`;
+        const locked = SHINYLOCK.has(id);
+        if (locked) st.shiny = false;
+        $("#shiny").innerHTML = locked
+          ? '<div class="v muted">Sem forma shiny normal</div>'
+          : `<div class="sw"><button class="switch" id="sw" role="switch" aria-checked="${st.shiny}" aria-label="Ver versão shiny"></button><span class="v" id="swl">${st.shiny ? "Shiny" : "Normal"}</span></div>`;
+        $("#shinybtn").disabled = locked;
+        $("#shinybtn").style.opacity = locked ? 0.35 : 1;
+        $("#genv").textContent = `${GENS[m.g].n} · ${GENS[m.g].reg}`;
+        const f = forms(id);
+        $("#forms").innerHTML = f.length
+          ? `<div class="chips">${f.map(([k, t]) => `<span class="chip ${k}">${t}</span>`).join("")}</div>`
+          : '<div class="v muted">Nenhuma</div>';
+        const mv = movie(id);
+        $("#movie").innerHTML = mv
+          ? `<div class="chips"><span class="chip mov">Filme</span></div><div class="v" style="margin-top:6px">${mv}</div>`
+          : '<div class="v muted">Não é destaque em filme</div>';
+        const p = MON[id - 2],
+          n = MON[id];
+        const pb = $("#prev"),
+          nb = $("#next");
+        pb.disabled = !p;
+        nb.disabled = !n;
+        pb.textContent = p ? `‹ ${pad(p.id)} ${p.name}` : "—";
+        nb.textContent = n ? `${pad(n.id)} ${n.name} ›` : "—";
+        applyShiny();
+        document
+          .querySelectorAll(".card[aria-current]")
+          .forEach((x) => x.removeAttribute("aria-current"));
+        const cur = document.querySelector(`.card[data-id="${id}"]`);
+        if (cur) cur.setAttribute("aria-current", "true");
+        if (open) {
+          $("#detail").classList.add("open");
+          document.documentElement.classList.add("lock");
+          $("#detail").scrollTop = 0;
+          $("#close").focus({ preventScroll: true });
+        }
+      }
+      function applyShiny() {
+        $("#screen").classList.toggle("shinyon", st.shiny);
+        const sw = $("#sw");
+        if (sw) {
+          sw.setAttribute("aria-checked", String(st.shiny));
+          $("#swl").textContent = st.shiny ? "Shiny" : "Normal";
+        }
+        $("#shinybtn").style.background = st.shiny ? "#ffcb05" : "";
+        $("#shinybtn").style.color = st.shiny ? "#1a1500" : "";
+      }
+      function closeDetail() {
+        $("#detail").classList.remove("open");
+        document.documentElement.classList.remove("lock");
+      }
+      buildTabs();
+      buildSelects();
+      $("#grid").addEventListener("click", (e) => {
+        const c = e.target.closest(".card");
+        if (c) show(+c.dataset.id, true);
+      });
+      $("#q").addEventListener("input", (e) => {
+        st.q = e.target.value;
+        render();
+      });
+      $("#ft").addEventListener("change", (e) => {
+        st.type = e.target.value;
+        render();
+      });
+      $("#fr").addEventListener("change", (e) => {
+        st.rar = e.target.value;
+        render();
+      });
+      $("#ff").addEventListener("change", (e) => {
+        st.form = e.target.value;
+        render();
+      });
+      $("#fs").addEventListener("change", (e) => {
+        st.sort = e.target.value;
+        render();
+      });
+      $("#close").addEventListener("click", closeDetail);
+      $("#prev").addEventListener("click", () => show(st.sel - 1));
+      $("#next").addEventListener("click", () => show(st.sel + 1));
+      $("#detail").addEventListener("click", (e) => {
+        if (e.target.closest("#sw")) {
+          st.shiny = !st.shiny;
+          applyShiny();
+        }
+      });
+      $("#shinybtn").addEventListener("click", () => {
+        st.shiny = !st.shiny;
+        applyShiny();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeDetail();
+      });
+      st.gen = 0;
+      render();
+      show(25, false);
+    </script>
+    <script>
+      (() => {
+        delete MOVIES[802];
+        Object.assign(MOVIES, {
+          6: "Pokémon: I Choose You!",
+          250: "Pokémon: I Choose You!",
+          151: "Mewtwo Strikes Back",
+          245: "Pokémon 4Ever",
+          384: "Destiny Deoxys",
+          801: "Volcanion and the Mechanical Marvel",
+          807: "Pokémon: The Power of Us",
+          893: "Pokémon: Secrets of the Jungle",
+        });
+        MOVIE_ENTRIES.clear();
+        Object.keys(MOVIES).forEach((k) => MOVIE_ENTRIES.add(+k));
+        const EXTRA = {
+          Mítico:
+            "Um Pokémon mítico: raríssimo, quase ninguém o encontra fora de eventos especiais.",
+          Lendário:
+            "Um Pokémon lendário, cercado de histórias e procurado por treinadores do mundo todo.",
+          "Ultra Entidade":
+            "Vem de outra dimensão e é muito perigoso de se encontrar.",
+          Paradoxo:
+            "Lembra criaturas de eras muito distantes, como se viesse do passado ou do futuro.",
+          "Pseudo-lendário":
+            "Muito forte e difícil de treinar, mas recompensa quem tem paciência.",
+          Inicial:
+            "Costuma ser o primeiro parceiro de treinadores iniciantes da região.",
+        };
+        describe = function (m) {
+          if (DESC[m.id]) return DESC[m.id];
+          const [a, b] = m.t,
+            tp = TYPES[a][0] + (b ? " e " + TYPES[b][0] : "");
+          const f1 = FLAVOR[a][m.id % 3],
+            f2 = b ? FLAVOR[b][(m.id >> 1) % 3] : "";
+          return `${m.name} é um Pokémon do tipo ${tp}, registrado na região de ${GENS[m.g].reg}. ${f1} ${f2} ${EXTRA[rarity(m.id).k] || ""}`
+            .replace(/\s+/g, " ")
+            .trim();
+        };
+        const FAV = new Set();
+        try {
+          JSON.parse(localStorage.getItem("dex-fav") || "[]").forEach((x) =>
+            FAV.add(x),
+          );
+        } catch (e) {}
+        const save = () => {
+          try {
+            localStorage.setItem("dex-fav", JSON.stringify([...FAV]));
+          } catch (e) {}
+        };
+        let onlyFav = false;
+        const fb = document.createElement("button");
+        fb.className = "ib";
+        fb.id = "favbtn";
+        fb.setAttribute("aria-label", "Favoritar");
+        $("#shinybtn").before(fb);
+        const paint = () => {
+          const on = FAV.has(st.sel);
+          fb.textContent = on ? "♥" : "♡";
+          fb.style.color = on ? "#ff8aa5" : "";
+        };
+        fb.onclick = () => {
+          FAV.has(st.sel) ? FAV.delete(st.sel) : FAV.add(st.sel);
+          save();
+          paint();
+          if (onlyFav) render();
+        };
+        const _s = show;
+        show = function (id, o) {
+          _s(id, o);
+          paint();
+        };
+        const _f = filtered;
+        filtered = function () {
+          const l = _f();
+          return onlyFav ? l.filter((m) => FAV.has(m.id)) : l;
+        };
+        $(".row").insertAdjacentHTML(
+          "beforeend",
+          '<div class="field"><label>&nbsp;</label><button class="gen" id="rnd">🎲 Aleatório</button></div><div class="field"><label>&nbsp;</label><button class="gen" id="fvf" aria-pressed="false">♥ Só favoritos</button></div>',
+        );
+        $("#rnd").onclick = () =>
+          show(1 + Math.floor(Math.random() * MON.length), true);
+        $("#fvf").onclick = (e) => {
+          onlyFav = !onlyFav;
+          e.currentTarget.setAttribute("aria-pressed", String(onlyFav));
+          render();
+        };
+        paint();
+      })();
+    </script>
+
+    <script>
+      (() => {
+        /* Correção Iron Valiant */
+        const rm = MON.findIndex((m) => m.name === "Roaring Moon");
+        if (rm >= 0 && !MON.some((m) => m.name === "Iron Valiant")) {
+          MON.splice(rm + 1, 0, {
+            id: 0,
+            name: "Iron Valiant",
+            t: ["fa", "fg"],
+            g: 8,
+          });
+          MON.forEach((m, i) => (m.id = i + 1));
+          GENS[8].e = MON.length;
+        }
+        /* Filmes */
+        Object.keys(MOVIES).forEach((k) => delete MOVIES[k]);
+        const FILMS = [
+          ["Mewtwo Strikes Back (1998)", [150, 151, 25]],
+          ["Pokémon 2000: The Power of One", [249, 144, 145, 146]],
+          ["Pokémon 3: Spell of the Unown", [201, 244]],
+          ["Pokémon 4Ever", [251]],
+          ["Pokémon Heroes", [380, 381]],
+          ["Jirachi: Wish Maker", [385]],
+          ["Destiny Deoxys", [386]],
+          ["Lucario and the Mystery of Mew", [448, 151]],
+          ["Manaphy and the Temple of the Sea", [490, 489]],
+          ["The Rise of Darkrai", [483, 484, 491]],
+          ["Giratina and the Sky Warrior", [487, 492]],
+          ["Arceus and the Jewel of Life", [493, 483, 484, 487]],
+          ["Zoroark: Master of Illusions", [570, 571, 251]],
+          ["Victini and Reshiram / Zekrom", [494, 643, 644]],
+          ["Kyurem VS the Sword of Justice", [646, 647]],
+          ["Genesect and the Legend Awakened", [649, 150]],
+          ["Diancie and the Cocoon of Destruction", [719]],
+          ["Hoopa and the Clash of Ages", [720]],
+          ["Volcanion and the Mechanical Marvel", [721, 801]],
+          ["Pokémon the Movie: I Choose You!", [25, 250, 802]],
+          ["Pokémon the Movie: The Power of Us", [807]],
+          ["Mewtwo Strikes Back: Evolution (2019)", [150, 151]],
+          ["Pokémon: Secrets of the Jungle", [893]],
+        ];
+        FILMS.forEach(([t, ids]) =>
+          ids.forEach(
+            (id) => (MOVIES[id] = MOVIES[id] ? MOVIES[id] + " · " + t : t),
+          ),
+        );
+        MOVIE_ENTRIES.clear();
+        Object.keys(MOVIES).forEach((k) => MOVIE_ENTRIES.add(+k));
+        /* Imagens */
+        const IMG =
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+        const ART = (id, s) =>
+          IMG + "other/official-artwork/" + (s ? "shiny/" : "") + id + ".png";
+        const SPR = (id) => IMG + id + ".png";
+        const art = document.createElement("img");
+        art.id = "art";
+        art.className = "emblem art";
+        art.hidden = true;
+        art.width = 260;
+        art.height = 260;
+        art.decoding = "async";
+        $("#emblem").before(art);
+        art.onload = () => {
+          art.hidden = false;
+          $("#emblem").style.display = "none";
+        };
+        art.onerror = () => {
+          art.hidden = true;
+          $("#emblem").style.display = "";
+        };
+        function setArt() {
+          const m = MON[st.sel - 1];
+          if (!m) return;
+          art.hidden = true;
+          $("#emblem").style.display = "";
+          art.alt = m.name + (st.shiny ? " (shiny)" : "");
+          art.src = ART(m.id, st.shiny && !SHINYLOCK.has(m.id));
+        }
+        const _apply = applyShiny;
+        applyShiny = function () {
+          _apply();
+          setArt();
+        };
+        const _render = render;
+        render = function () {
+          _render();
+          document.querySelectorAll("#grid .card").forEach((c) => {
+            const i = document.createElement("img");
+            i.className = "spr";
+            i.loading = "lazy";
+            i.alt = "";
+            i.src = SPR(c.dataset.id);
+            i.onerror = () => i.remove();
+            c.appendChild(i);
+          });
+        };
+        /* PokéAPI */
+        $("#desc").insertAdjacentHTML(
+          "afterend",
+          '<p class="desc en" id="descen" hidden></p>',
+        );
+        $(".nav").insertAdjacentHTML("beforebegin", '<div id="extra"></div>');
+        const API = "https://pokeapi.co/api/v2/";
+        const cache = new Map();
+        const get = (u) => {
+          if (!cache.has(u)) {
+            const p = fetch(API + u).then((r) => {
+              if (!r.ok) throw new Error(r.status);
+              return r.json();
+            });
+            p.catch(() => cache.delete(u));
+            cache.set(u, p);
+          }
+          return cache.get(u);
+        };
+        const HAB = {
+          cave: "Caverna",
+          forest: "Floresta",
+          grassland: "Campo",
+          mountain: "Montanha",
+          rare: "Raro",
+          "rough-terrain": "Terreno acidentado",
+          sea: "Mar",
+          urban: "Cidade",
+          "waters-edge": "Beira d'água",
+        };
+        const STAT = {
+          hp: "PS",
+          attack: "Ataque",
+          defense: "Defesa",
+          "special-attack": "Atq. Esp.",
+          "special-defense": "Def. Esp.",
+          speed: "Velocidade",
+        };
+        const cap = (s) =>
+          s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        const fmt = (n) =>
+          n.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+        function apiForms(names, staticForms) {
+          const out = [];
+          const megas = names.filter((n) => /-mega/.test(n));
+          if (megas.length) {
+            const L = megas
+              .map((n) => (n.match(/-mega-(\w)$/) || [])[1])
+              .filter(Boolean)
+              .map((s) => s.toUpperCase());
+            out.push([
+              "mega",
+              L.length ? "Mega " + L.join(" / ") : "Mega Evolução",
+            ]);
+          } else
+            staticForms
+              .filter((f) => f[0] === "mega")
+              .forEach((f) => out.push(f));
+          if (names.some((n) => /-gmax$/.test(n)))
+            out.push(["gmax", "Gigamax"]);
+          else
+            staticForms
+              .filter((f) => f[0] === "gmax")
+              .forEach((f) => out.push(f));
+          if (names.some((n) => /-primal$/.test(n)))
+            out.push(["prim", "Reversão Primal"]);
+          else
+            staticForms
+              .filter((f) => f[0] === "prim")
+              .forEach((f) => out.push(f));
+          const reg = ["alola", "galar", "hisui", "paldea"].filter((r) =>
+            names.some((n) => n.endsWith("-" + r) || n.includes("-" + r + "-")),
+          );
+          if (reg.length)
+            reg.forEach((r) => out.push(["reg", "Forma de " + cap(r)]));
+          else
+            staticForms
+              .filter((f) => f[0] === "reg")
+              .forEach((f) => out.push(f));
+          return out;
+        }
+        async function enrich(id) {
+          const box = $("#extra"),
+            en = $("#descen");
+          box.innerHTML =
+            '<div class="cell wide"><div class="v muted">Carregando dados online…</div></div>';
+          en.hidden = true;
+          try {
+            const [sp, pk] = await Promise.all([
+              get("pokemon-species/" + id),
+              get("pokemon/" + id),
+            ]);
+            if (st.sel !== id) return;
+            const genus =
+              (sp.genera.find((g) => g.language.name === "en") || {}).genus ||
+              "—";
+            const hab = sp.habitat
+              ? HAB[sp.habitat.name] || cap(sp.habitat.name)
+              : "Desconhecido";
+            const ab = pk.abilities
+              .map(
+                (a) => cap(a.ability.name) + (a.is_hidden ? " (oculta)" : ""),
+              )
+              .join(", ");
+            const stats = pk.stats
+              .map((s) => {
+                const w = Math.min(100, (s.base_stat / 180) * 100);
+                return `<div class="stat"><span>${STAT[s.stat.name] || s.stat.name}</span><b>${s.base_stat}</b><span class="tr"><i style="width:${w}%"></i></span></div>`;
+              })
+              .join("");
+            const total = pk.stats.reduce((a, s) => a + s.base_stat, 0);
+            box.innerHTML = `
+        <div class="cell"><h3>Altura</h3><div class="v">${fmt(pk.height / 10)} m</div></div>
+        <div class="cell"><h3>Peso</h3><div class="v">${fmt(pk.weight / 10)} kg</div></div>
+        <div class="cell"><h3>Categoria (inglês)</h3><div class="v">${genus}</div></div>
+        <div class="cell"><h3>Habitat</h3><div class="v">${hab}</div></div>
+        <div class="cell wide"><h3>Habilidades (nomes em inglês)</h3><div class="v">${ab}</div></div>
+        <div class="cell wide"><h3>Atributos base · total ${total}</h3>${stats}</div>`;
+            const fl = sp.flavor_text_entries
+              .filter((f) => f.language.name === "en")
+              .pop();
+            if (fl) {
+              en.textContent =
+                "Texto oficial (em inglês): " +
+                fl.flavor_text.replace(/[\n\f\u00ad]/g, " ");
+              en.hidden = false;
+            }
+            const names = sp.varieties.map((v) => v.pokemon.name);
+            const f = apiForms(names, forms(id));
+            $("#forms").innerHTML = f.length
+              ? `<div class="chips">${f.map(([k, t]) => `<span class="chip ${k}">${t}</span>`).join("")}</div>`
+              : '<div class="v muted">Nenhuma</div>';
+          } catch (e) {
+            if (st.sel === id)
+              box.innerHTML =
+                '<div class="cell wide"><div class="v muted">Não foi possível carregar dados online (sem conexão com a PokéAPI).</div></div>';
+          }
+        }
+        const _show = show;
+        show = function (id, open) {
+          _show(id, open);
+          enrich(id);
+        };
+        render();
+        show(st.sel, false);
+      })();
+    </script>
+  </body>
+</html>
