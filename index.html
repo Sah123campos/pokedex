@@ -306,7 +306,7 @@
         grid-template-columns: minmax(0, 1fr);
         gap: 20px;
         align-items: start;
-      min-height: 0;
+        min-height: 0;
       }
       .grid {
         display: grid;
@@ -1078,6 +1078,58 @@
           grid-template-columns: 1fr;
         }
       }
+
+      /* ===== SELETOR DE FORMAS ===== */
+      .formbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 10px auto 0;
+        width: fit-content;
+        max-width: 100%;
+        background: #0007;
+        border: 2px solid #0006;
+        border-radius: 999px;
+        padding: 4px;
+      }
+      .formbar[hidden] {
+        display: none;
+      }
+      .formbar .ib {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 26px;
+        font-weight: 700;
+        padding-bottom: 3px;
+        background: var(--gold);
+        color: #1a1500;
+        border-color: #fff;
+      }
+      .formbar .ib:hover {
+        background: #fff27a;
+      }
+      .formbar .fl {
+        text-align: center;
+        min-width: 130px;
+        max-width: 190px;
+        font-family: var(--f-data);
+        line-height: 1.2;
+      }
+      .formbar .fl b {
+        display: block;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+      }
+      .formbar .fl small {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: #ffe9a0;
+        font-variant-numeric: tabular-nums;
+      }
     </style>
   </head>
   <body>
@@ -1462,6 +1514,81 @@
         1008: "Pokémon do futuro, que carrega uma máquina de energia. Considerado uma joia da tecnologia.",
         1024: "Tem o poder de transformar cristais em formas. Se esconde na cratera de Tera.",
         1025: "Controla a mente de quem come seus mochis. Faz as pessoas dançarem à sua vontade.",
+        2: "O botão nas costas incha com a luz do sol até virar uma flor. O peso extra o obriga a firmar bem as patas e a fortalecer as pernas.",
+        3: "A grande flor nas costas capta a luz do sol e a transforma em energia. Em dias de sol forte, seu perfume suave se espalha e acalma quem está por perto.",
+        5: "Briguento, procura rivais fortes para duelar e não foge de desafios. Quando se empolga na luta, a chama da cauda arde mais alta.",
+        8: "A cauda peluda e fofa é sinal de vida longa: quanto mais velho, mais pelo. Ele usa a cauda e as orelhas para manter o equilíbrio ao nadar.",
+        152: "A folha na cabeça exala um aroma suave que acalma quem está por perto. Adora se aquecer ao sol e costuma ficar em campos abertos.",
+        153: "O colar de folhas no pescoço libera um cheiro picante que anima e dá energia a quem está cansado. Anda a passos firmes e gosta de aproveitar o sol.",
+        154: "O perfume da flor no pescoço reanima quem está abatido. Onde ele passa, plantas e flores parecem crescer mais saudáveis e vigorosas.",
+        155: "Tímido, vive encolhido e só acende as chamas das costas quando se assusta ou fica irritado. Em repouso, o fogo se apaga e ele parece uma bolinha de pelo.",
+        156: "As chamas do pescoço e das costas são mais fortes que na forma anterior e servem para intimidar. O calor aumenta quando ele se prepara para atacar.",
+        157: "Esconde-se atrás de ondas de calor que distorcem o ar ao seu redor. Quando decide atacar, faz as chamas do pescoço explodirem em fogo intenso.",
+        158: "Tem mandíbulas fortíssimas e morde tudo o que se mexe, até quem tenta ser gentil. Ainda filhote, usa a mordida para brincar e para lutar.",
+        159: "As presas afiadas voltam a crescer quando caem e não soltam o que morderam. Cresce rápido, ganhando músculos e agressividade.",
+        160: "Abre a bocarra para intimidar e abocanha o rival com mordidas devastadoras. Nada rápido na água e se move bem também em terra firme.",
+        252: "Calmo e atento, vive em florestas densas. Ganchos minúsculos nas patas permitem escalar troncos e paredes sem escorregar.",
+        253: "Salta entre os galhos com agilidade impressionante. As folhas afiadas dos braços cortam como lâminas e ele defende seu território sem hesitar.",
+        254: "Guarda a floresta com vigilância e domina a luta entre as árvores. Corta com as folhas dos braços e se move com rapidez surpreendente.",
+        255: "Guarda uma chama dentro da barriga e é quentinho para abraçar. Costuma seguir o treinador de perto e solta faíscas quando fica nervoso.",
+        256: "Dá saltos e chutes muito rápidos e canta alto de manhã cedo. Pode acertar vários golpes seguidos antes de o rival reagir.",
+        257: "As pernas poderosas conseguem saltar sobre prédios. Quando se empolga, as chamas dos pulsos crescem e seus chutes ficam ainda mais fortes.",
+        258: "A barbatana na cabeça capta mudanças na água e no ar. Mesmo pequeno, é forte o bastante para empurrar pedras grandes e adora lama.",
+        259: "Anda bem na lama e é ainda mais ágil em terra do que na água. Vive em pântanos e suas patas fortes deixam pegadas bem fundas.",
+        260: "Os braços fortes erguem rochas gigantes. Prevê tempestades com antecedência e protege quem está por perto, nadando e correndo com velocidade.",
+        387: "Tem uma muda na cabeça e um casco de terra endurecida. Se está com sede, a folha murcha, por isso fica perto de fontes de água.",
+        388: "Pequenos arbustos crescem no casco, e outros Pokémon às vezes bebem água da fonte que ele conhece. Vive onde a água é limpa e pura.",
+        389: "O casco enorme carrega uma pequena árvore e abriga Pokémon que fazem ninhos ali. Anda devagar, mas é resistente e muito forte.",
+        390: "A chama na ponta do rabo está sempre acesa e só se apaga quando ele dorme. Ágil, escala penhascos com facilidade.",
+        391: "A chama da cauda cresce quando ele luta, e a agilidade lhe permite escalar paredes e saltar longe. Usa golpes rápidos de artes marciais.",
+        392: "Luta com um estilo próprio, combinando chutes e fogo. A chama da cabeça nunca se apaga e o calor aumenta junto com sua empolgação.",
+        393: "Orgulhoso, não gosta de aceitar ajuda e leva a sério qualquer desafio. As penas grossas o protegem do frio e ele nada muito bem.",
+        394: "Solitário e orgulhoso, não confia em quem não respeita. As nadadeiras fortes golpeiam com muita força e ele vive em águas frias.",
+        395: "O tridente na cabeça marca o status de líder. Nada por oceanos gelados e suas nadadeiras cortam até blocos de gelo.",
+        495: "Absorve a luz do sol com o corpo e a cauda, e fica mais rápido. Calmo, mostra ar de superioridade diante de quem o desafia.",
+        496: "Ágil e silencioso, esconde-se entre as folhas e escapa de fininho. Quanto mais sol recebe, mais veloz ele fica.",
+        497: "Seu porte majestoso intimida quem o enfrenta. Quando está cheio de energia, fica mais forte e só aceita treinadores de grande capacidade.",
+        498: "Quando espirra, solta faíscas e pequenas chamas. Gosta de assar bagas com o fogo que sai do nariz antes de comê-las.",
+        499: "Forte e veloz, derruba oponentes com cabeçadas. Quando se empolga, solta labaredas pelas narinas e esquenta o ambiente ao redor.",
+        500: "Soca com os punhos em chamas e se move com muita força. Quando está empolgado, o fogo da barba cresce e seus golpes ficam mais intensos.",
+        501: "Usa a vieira presa à barriga para abrir bagas e como arma na hora da luta. Cuida dela com muito carinho e a mantém sempre afiada.",
+        502: "Treina golpes com duas vieiras, usando uma em cada mão. Disciplinado, tem orgulho das técnicas que dominou.",
+        503: "Empunha as espadas dos membros dianteiros em ataques precisos. Domina o campo de batalha com postura firme e olhar sério.",
+        650: "Os espinhos da cabeça endurecem quando ele se sente ameaçado. É gentil e brincalhão, e usa essas defesas para proteger quem ama.",
+        651: "Uma armadura de casca dura cobre o corpo e o defende de ataques. Gentil, gosta de proteger os amigos e aguenta bem golpes fortes.",
+        652: "O casco nas costas resiste a grandes impactos e protege os aliados. Os punhos cobertos de espinhos acertam com muita força.",
+        653: "As orelhas grandes liberam calor, e ele mastiga galhos secos para ganhar energia. Quando fica bravo, sopra ar quente.",
+        654: "Acende o graveto que carrega na cauda e o balança no ar, fazendo as chamas dançarem. A vara concentra seu poder.",
+        655: "Aponta o graveto para concentrar poder psíquico e criar fogo intenso. Dizem que enxerga o futuro nas chamas.",
+        656: "Cobre o corpo com bolhas que funcionam como proteção. Dá saltos ágeis e fica sempre se mexendo para manter o equilíbrio.",
+        657: "Salta entre galhos com agilidade impressionante e arremessa bolhas duras. Usa-as para atingir alvos a distância.",
+        722: "Voa em silêncio escondido entre as folhas e surpreende suas presas. Absorve a luz do sol para ter energia e dorme durante o dia.",
+        723: "Dispara penas afiadas como dardos, com precisão. Gosta de ordem e fica incomodado quando o ninho está bagunçado.",
+        724: "Caça em silêncio no meio da mata, atirando flechas feitas com as penas. Tem ótima visão para localizar alvos de longe.",
+        725: "Independente, evita se aproximar de pessoas. Lambe o pelo e junta bolas de pelo que depois queima, gerando fogo.",
+        726: "O sino de fogo no pescoço faz barulho quando ele se irrita. Cria chamas poderosas e solta rugidos fortes nessas horas.",
+        727: "Tem um estilo de luta selvagem e usa golpes de fogo vindos do peito. Quando fica irritado, perde o controle.",
+        728: "Brinca soprando balões de água pelo nariz. Nada com elegância e os usa tanto para se defender quanto para se exibir.",
+        729: "Cria bolhas de água para dançar. Seus movimentos são elegantes, e quando canta faz bolhas que se espalham no ar.",
+        730: "Canta para controlar a água, e a voz forma bolhas de som que atingem os adversários. A melodia também acalma quem a ouve.",
+        810: "Carrega um graveto com o qual toca um ritmo vibrante. Dizem que o som faz as plantas ao redor crescerem melhor.",
+        811: "Usa dois gravetos para martelar um ritmo sem parar. Cada batida altera a energia ao redor, e a vegetação reage.",
+        812: "Comanda o grupo com seu tambor gigante feito de um toco e faz as plantas crescerem ao som do ritmo.",
+        813: "Cheio de energia, corre sem parar e chuta bolas de fogo. Quando se empolga, o corpo esquenta e as pernas ficam ainda mais rápidas.",
+        814: "Tem patas ágeis e treina chutes em pedras para ficar mais forte. Quando fica empolgado, o corpo esquenta e a pelagem fica quente.",
+        815: "Chuta uma pedra em chamas como se fosse uma bola. Quando se empolga, os chutes ficam mais fortes e velozes.",
+        816: "Tímido, esconde-se na água para observar. Quando chora, libera um gás que faz quem está por perto chorar também.",
+        817: "Cria ilusões e atrapalha os rivais com truques de água, evitando lutar de frente sempre que pode. Prefere agir sem ser notado.",
+        818: "Dispara jatos de água pelos dedos e acerta alvos de longe com precisão. Age como agente secreto, sempre sozinho.",
+        906: "Gato de planta com pelagem macia que exala um doce perfume de flores. Gosta de ser mimado e vira manhoso.",
+        907: "Cria folhas e flores no corpo e as usa para atacar. A cauda flexível funciona como chicote, e ele se move com a graça de um felino.",
+        908: "Mago de truques, usa flores para criar ilusões. Salta e ataca com a capa, confundindo adversários antes de golpear.",
+        909: "Calmo e comilão, gosta de cochilar ao sol. Guarda fogo no corpo e solta labaredas quando fica agitado.",
+        910: "Cria fogo dentro do corpo, que sai das fendas do pescoço. Come muito para manter as chamas fortes e cheio de energia.",
+        911: "Canta com duas vozes: a do corpo e a do crânio que carrega na cabeça. O canto faz as chamas azuis dançarem.",
+        912: "Elegante, gosta de manter as penas limpas e bem arrumadas. Usa a água para alisar a plumagem e praticar passos de dança.",
+        913: "Dança com movimentos ágeis e usa as pernas fortes para chutar. Adora se exibir e deixa as penas sempre úmidas.",
+        914: "Combina dança e luta em movimentos giratórios cheios de ritmo. Usa braços e pernas fortes para acertar golpes muito rápidos.",
       };
       const FLAVOR = {
         no: [
@@ -2229,6 +2356,431 @@
           enrich(id);
         };
         render();
+        show(st.sel, false);
+      })();
+    </script>
+    <script>
+      /* ===== FORMAS ALTERNATIVAS (Galar, Alola, Hisui, Mega, Gigamax...) ===== */
+      (() => {
+        const API = "https://pokeapi.co/api/v2/";
+        const cache = new Map();
+        const get = (u) => {
+          if (!cache.has(u)) {
+            const p = fetch(API + u).then((r) => {
+              if (!r.ok) throw new Error(r.status);
+              return r.json();
+            });
+            p.catch(() => cache.delete(u));
+            cache.set(u, p);
+          }
+          return cache.get(u);
+        };
+        const TK = {
+          normal: "no",
+          fire: "fi",
+          water: "wa",
+          electric: "el",
+          grass: "gr",
+          ice: "ic",
+          fighting: "fg",
+          poison: "po",
+          ground: "gd",
+          flying: "fl",
+          psychic: "ps",
+          bug: "bu",
+          rock: "ro",
+          ghost: "gh",
+          dragon: "dr",
+          dark: "da",
+          steel: "st",
+          fairy: "fa",
+        };
+        const REGIONS = new Set(["alola", "galar", "hisui", "paldea"]);
+        const TOK = {
+          mega: "Mega",
+          x: "X",
+          y: "Y",
+          gmax: "Gigamax",
+          primal: "Primal",
+          alola: "Alola",
+          galar: "Galar",
+          hisui: "Hisui",
+          paldea: "Paldea",
+        };
+        const HAB = {
+          cave: "Caverna",
+          forest: "Floresta",
+          grassland: "Campo",
+          mountain: "Montanha",
+          rare: "Raro",
+          "rough-terrain": "Terreno acidentado",
+          sea: "Mar",
+          urban: "Cidade",
+          "waters-edge": "Beira d'água",
+        };
+        const STAT = {
+          hp: "PS",
+          attack: "Ataque",
+          defense: "Defesa",
+          "special-attack": "Atq. Esp.",
+          "special-defense": "Def. Esp.",
+          speed: "Velocidade",
+        };
+        const cap = (s) =>
+          s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        const fmt = (n) =>
+          n.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+
+        function label(v, spName) {
+          if (v.is_default) return "Forma normal";
+          const n = v.pokemon.name;
+          const suf = n.startsWith(spName + "-")
+            ? n.slice(spName.length + 1)
+            : n;
+          const t = suf.split("-");
+          if (t.length === 1) {
+            if (REGIONS.has(t[0])) return "Forma de " + TOK[t[0]];
+            if (t[0] === "mega") return "Mega Evolução";
+            if (t[0] === "primal") return "Reversão Primal";
+            if (t[0] === "gmax") return "Gigamax";
+          }
+          return t.map((x) => TOK[x] || cap(x)).join(" ");
+        }
+
+        const V = { id: 0, i: 0, list: [], sp: null, art: null, desc: "" };
+
+        /* Descrições das formas (chave = nome da variedade na PokéAPI) */
+        const FORMDESC = {
+          "rattata-alola":
+            "Em Alola, os Rattata passaram a viver perto de humanos e a roubar comida. Ficaram noturnos e mais espertos, com o pelo escuro.",
+          "raticate-alola":
+            "Gosta tanto de comer que ficou rechonchudo. Guarda comida nas bochechas enormes e mal consegue correr, mas é muito esperto.",
+          "raichu-alola":
+            "Usa a cauda como prancha e flutua no ar com poderes psíquicos. Dizem que a dieta de panquecas doces de Alola mudou a eletricidade do seu corpo.",
+          "sandshrew-alola":
+            "Vive em montanhas geladas, com o corpo coberto de gelo e aço para se proteger do frio. Enrola-se numa bola e rola pela neve.",
+          "sandslash-alola":
+            "Tem espinhos de gelo e aço muito afiados. Desliza pela neve em alta velocidade e fere quem se aproxima.",
+          "vulpix-alola":
+            "Vive em montanhas nevadas e solta ar gelado pela boca. O pelo é branco e macio, e ela cria cristais de gelo.",
+          "ninetales-alola":
+            "Dizem que é sagrada nas montanhas geladas de Alola. Cria nevascas para proteger o território, e o pelo parece um véu de neve.",
+          "diglett-alola":
+            "Os fios dourados na cabeça funcionam como sensores e ajudam a perceber o que está sob a terra. O corpo é mais resistente que o normal.",
+          "dugtrio-alola":
+            "Os cabelos dourados dos três corpos servem de sensores e deixam o ataque mais forte. O corpo é mais firme que o da forma original.",
+          "meowth-alola":
+            "Mimado pela realeza de Alola, ganhou pelo escuro e um ar arrogante. Vira as costas para quem o irrita.",
+          "persian-alola":
+            "Orgulhoso e sensível, cuida muito do rosto achatado. Só confia em quem o trata como nobre e, em batalha, usa golpes sujos.",
+          "geodude-alola":
+            "Absorve eletricidade e o ferro do solo de Alola. O corpo fica imantado e os fios de ferro grudam nele.",
+          "graveler-alola":
+            "Carrega pedras eletrizadas e pode soltar a carga acumulada com muita força.",
+          "golem-alola":
+            "Carrega pedras eletrizadas ao redor do corpo como armadura e as dispara como projéteis carregados.",
+          "grimer-alola":
+            "Cresceu em Alola comendo o lixo das cidades. Tem cores vivas e acumula toxinas, mas é um Pokémon calmo.",
+          "muk-alola":
+            "O corpo colorido guarda veneno em alta concentração. Basta encostar nele para ser intoxicado.",
+          "exeggutor-alola":
+            "Cresceu muito sob o sol de Alola e chega a quase 11 metros de altura. Cada cabeça tem pensamentos próprios.",
+          "marowak-alola":
+            "Dança com o osso em chamas para honrar os ancestrais. No escuro, o fogo parece uma assombração.",
+          "meowth-galar":
+            "Vive nas estradas de Galar há muito tempo. Criado em condições difíceis, tem o pelo parecido com aço e é bem valente.",
+          "ponyta-galar":
+            "Tem a crina branca e rosada e poderes psíquicos. Usa a energia do corpo para ler emoções e é gentil com quem confia.",
+          "rapidash-galar":
+            "Com um chifre elegante, solta rajadas de energia psíquica. Corre tão rápido que parece voar, mas é tímido.",
+          "slowpoke-galar":
+            "Vive em Galar e mudou de aparência, mas continua tão lento e tranquilo quanto o normal. Sua evolução depende do item que recebe.",
+          "slowbro-galar":
+            "Evolui quando um Shellder morde a cauda do Slowpoke de Galar e injeta veneno, o que muda o corpo e o deixa ainda mais lento.",
+          "slowking-galar":
+            "Evolui com um item feito de Galarica. Dizem que o veneno do Shellder bagunçou seus pensamentos e o deixa mais sábio e perigoso.",
+          "farfetchd-galar":
+            "Em Galar se tornou mais agressivo e luta com um alho-poró forte. Quando vence muitas batalhas, evolui para Sirfetch'd.",
+          "weezing-galar":
+            "Vive perto de fábricas de Galar e transforma o ar poluído em gás. As chaminés do corpo soltam vapor.",
+          "mr-mime-galar":
+            "Adora dançar sapateado no gelo. Os passos congelam o chão e o ritmo deixa os adversários hipnotizados.",
+          "articuno-galar":
+            "Voa em silêncio com poderes psíquicos e usa as asas como chicotes de energia. Dizem que se alimenta de medo.",
+          "zapdos-galar":
+            "Corre mais do que voa e luta com chutes muito fortes. Dizem que fica mais animado quanto mais forte é o oponente.",
+          "moltres-galar":
+            "Dizem que envolve o corpo em chamas escuras e solta fogo negro para espalhar medo.",
+          "corsola-galar":
+            "É um coral desbotado do fundo do mar de Galar. Dizem que é o espírito de corais que morreram com a mudança do ambiente.",
+          "zigzagoon-galar":
+            "Tem a pelagem escura e listrada e é muito rápido, correndo em zigue-zague. Evolui para Linoone e depois para Obstagoon.",
+          "linoone-galar":
+            "Corre em linha reta, tão rápido que ataca antes de o oponente perceber. Fica bravo com muita facilidade.",
+          "darumaka-galar":
+            "Vive em regiões geladas e solta frio em vez de calor. Rola pela neve para ficar do tamanho certo.",
+          "darmanitan-galar-standard":
+            "Pode se enterrar na neve e fica sério e agressivo. No Modo Zen, medita em silêncio.",
+          "yamask-galar":
+            "Carrega uma máscara de pedra e é o espírito de um habitante de Galar. Dizem que sente saudade da vida.",
+          "stunfisk-galar":
+            "Vive no fundo de águas turvas e fica parado à espera de presas. O corpo é mais duro e a mordida é perigosa.",
+          "growlithe-hisui":
+            "Vive nas montanhas de Hisui. Era usado como guardião por treinadores antigos e sente cheiros de muito longe.",
+          "arcanine-hisui":
+            "Dizem que era venerado como guardião das montanhas de Hisui. Vive em terreno rochoso e vulcânico, com crina espessa e olhar imponente.",
+          "voltorb-hisui":
+            "Parece uma bola feita de Apricorn. Dizem que nasceu quando uma semente foi atingida por energia elétrica, e explode ao menor choque.",
+          "electrode-hisui":
+            "Parece uma bola feita de Apricorn. É mais pesado e explosivo, e rola rápido por onde passa.",
+          "typhlosion-hisui":
+            "Dizem que guia as almas com as chamas fantasmagóricas que solta. A pelagem é escura e o olhar é sereno.",
+          "qwilfish-hisui":
+            "Os espinhos escuros escondem um veneno forte. Vive em águas escuras e, quando evolui, vira Overqwil.",
+          "sneasel-hisui":
+            "Vive em lugares frios e luta com garras venenosas. É muito rápido e temido em Hisui.",
+          "samurott-hisui":
+            "Usa uma lâmina feita da concha e luta com muita honra, atacando com cortes certeiros.",
+          "lilligant-hisui":
+            "Dança com folhas e movimentos de luta. O ritmo é elegante, mas corta como um golpe afiado.",
+          "zorua-hisui":
+            "Dizem que carrega espíritos e tem aparência fantasmagórica. Costuma aparecer na neve e enganar viajantes.",
+          "zoroark-hisui":
+            "Cria ilusões fantasmagóricas usando a emoção das vítimas. Dizem que assombra as florestas geladas de Hisui.",
+          "braviary-hisui":
+            "Voa em silêncio e tem poderes psíquicos. Observa o céu em busca de presas e tem penas brancas e vermelhas.",
+          "sliggoo-hisui":
+            "Tem uma carapaça de aço sobre o corpo mole. Gosta de lugares úmidos e é mais teimoso que a forma original.",
+          "goodra-hisui":
+            "Tem o casco de aço e um corpo resistente. É mais agressivo que a forma original e ataca com a carapaça de metal.",
+          "avalugg-hisui":
+            "Tem o corpo de gelo e pedra e flutua em águas geladas. Dizem que, quando se move, parece uma ilha.",
+          "decidueye-hisui":
+            "Treina artes marciais e usa as flechas de folha como um lutador. É concentrado e rápido.",
+          "tauros-paldea-combat-breed":
+            "Raça de Tauros de Paldea que luta em manadas, usando os chifres e o corpo robusto no combate corpo a corpo.",
+          "tauros-paldea-blaze-breed":
+            "Raça de Tauros de Paldea com chamas na crina. É mais impetuosa e solta fogo ao correr.",
+          "tauros-paldea-aqua-breed":
+            "Raça de Tauros de Paldea que vive perto da água e solta jatos d'água quando fica irritada.",
+          "wooper-paldea":
+            "Em Paldea, o Wooper vive em lama tóxica e acumula veneno no corpo. Evolui para Clodsire.",
+        };
+        const REGLORE = {
+          alola:
+            "Forma regional de Alola: o clima das ilhas e o modo de vida da região mudaram o aspecto e o tipo deste Pokémon.",
+          galar:
+            "Forma regional de Galar: a vida na região, com suas cidades, estradas e clima, mudou o aspecto e o tipo deste Pokémon.",
+          hisui:
+            "Forma regional de Hisui, a região antiga que um dia virou Sinnoh: adaptado a uma terra selvagem, tem um aspecto bem diferente.",
+          paldea:
+            "Forma regional de Paldea: adaptado ao ambiente local, tem um aspecto diferente da forma original.",
+        };
+        function baseText(f, name) {
+          if (FORMDESC[f.name]) return FORMDESC[f.name];
+          const sn = V.sp ? V.sp.name : "";
+          const suf = f.name.startsWith(sn + "-")
+            ? f.name.slice(sn.length + 1)
+            : f.name;
+          const t = suf.split("-");
+          if (REGIONS.has(t[0])) return REGLORE[t[0]];
+          if (t[0] === "mega") {
+            const k = t[1] ? " " + t[1].toUpperCase() : "";
+            return `Mega ${name}${k}: forma que surge na Mega Evolução, quando o Pokémon segura a Mega Pedra certa e tem um vínculo forte com o treinador. A mudança dura só durante a batalha.`;
+          }
+          if (t.includes("gmax"))
+            return `Gigamax: forma gigante que surge quando ${name} usa o Dynamax em Galar. Ele cresce muito, ganha um visual único e passa a usar um golpe G-Max exclusivo.`;
+          if (t[0] === "primal")
+            return `Reversão Primal: ${name} volta à sua forma ancestral ao entrar em contato com o orbe ${sn === "kyogre" ? "azul" : "vermelho"}, ganhando um poder enorme.`;
+          return `${f.label} de ${name}: uma forma alternativa que muda a aparência e, em alguns casos, os atributos do Pokémon.`;
+        }
+        function describeForm(pk, dpk) {
+          const d = $("#desc"),
+            en = $("#descen");
+          if (V.i === 0) {
+            if (V.desc) d.textContent = V.desc;
+            if (en) en.style.display = "";
+            return;
+          }
+          const f = V.list[V.i],
+            m = MON[st.sel - 1];
+          if (!f || !m) return;
+          const tp = (p) =>
+            p.types
+              .slice()
+              .sort((a, b) => a.slot - b.slot)
+              .map((x) => TK[x.type.name])
+              .filter(Boolean)
+              .map((k) => TYPES[k][0])
+              .join(" / ");
+          const sum = (p) => p.stats.reduce((a, s) => a + s.base_stat, 0);
+          const t1 = tp(dpk),
+            t2 = tp(pk),
+            b1 = sum(dpk),
+            b2 = sum(pk);
+          const typ =
+            t1 === t2
+              ? `O tipo continua sendo ${t2}`
+              : `O tipo muda de ${t1} para ${t2}`;
+          const bst =
+            b2 === b1
+              ? `o total de atributos base fica igual (${b1})`
+              : `o total de atributos base ${b2 > b1 ? "sobe" : "cai"} de ${b1} para ${b2}`;
+          d.textContent = `${baseText(f, m.name)} Em relação à forma normal: ${typ.charAt(0).toLowerCase() + typ.slice(1)} e ${bst}.`;
+          if (en) en.style.display = "none";
+        }
+
+        const bar = document.createElement("div");
+        bar.className = "formbar";
+        bar.id = "formbar";
+        bar.hidden = true;
+        bar.innerHTML =
+          '<button class="ib" id="fprev" aria-label="Forma anterior">‹</button>' +
+          '<div class="fl" aria-live="polite"><b id="flabel">Forma normal</b><small id="fcount"></small></div>' +
+          '<button class="ib" id="fnext" aria-label="Próxima forma">›</button>';
+        $("#name").before(bar);
+
+        function paintBar() {
+          const f = V.list[V.i];
+          if (!f) return;
+          $("#flabel").textContent = f.label;
+          $("#fcount").textContent = V.i + 1 + " / " + V.list.length;
+        }
+
+        function paintArt() {
+          const a = V.art;
+          if (!a) return;
+          const src = st.shiny && a.s ? a.s : a.n;
+          const img = $("#art");
+          if (!img) return;
+          if (!src) {
+            img.hidden = true;
+            $("#emblem").style.display = "";
+            return;
+          }
+          if (img.getAttribute("src") !== src) {
+            img.hidden = true;
+            $("#emblem").style.display = "";
+            img.src = src;
+          }
+          const m = MON[st.sel - 1];
+          img.alt = (m ? m.name : "") + " - " + (V.list[V.i] || {}).label;
+        }
+
+        function extra(sp, pk) {
+          const genus =
+            (sp.genera.find((g) => g.language.name === "en") || {}).genus ||
+            "—";
+          const hab = sp.habitat
+            ? HAB[sp.habitat.name] || cap(sp.habitat.name)
+            : "Desconhecido";
+          const ab = pk.abilities
+            .map((a) => cap(a.ability.name) + (a.is_hidden ? " (oculta)" : ""))
+            .join(", ");
+          const stats = pk.stats
+            .map((s) => {
+              const w = Math.min(100, (s.base_stat / 180) * 100);
+              return `<div class="stat"><span>${STAT[s.stat.name] || s.stat.name}</span><b>${s.base_stat}</b><span class="tr"><i style="width:${w}%"></i></span></div>`;
+            })
+            .join("");
+          const total = pk.stats.reduce((a, s) => a + s.base_stat, 0);
+          $("#extra").innerHTML = `
+        <div class="cell"><h3>Altura</h3><div class="v">${fmt(pk.height / 10)} m</div></div>
+        <div class="cell"><h3>Peso</h3><div class="v">${fmt(pk.weight / 10)} kg</div></div>
+        <div class="cell"><h3>Categoria (inglês)</h3><div class="v">${genus}</div></div>
+        <div class="cell"><h3>Habitat</h3><div class="v">${hab}</div></div>
+        <div class="cell wide"><h3>Habilidades (nomes em inglês)</h3><div class="v">${ab}</div></div>
+        <div class="cell wide"><h3>Atributos base · total ${total}</h3>${stats}</div>`;
+        }
+
+        function apply(pk, dpk) {
+          const t = pk.types
+            .slice()
+            .sort((a, b) => a.slot - b.slot)
+            .map((x) => TK[x.type.name])
+            .filter(Boolean);
+          if (t.length) {
+            const c1 = TYPES[t[0]][1],
+              c2 = TYPES[t[1] || t[0]][1];
+            const sc = $("#screen");
+            sc.style.setProperty("--c1", c1);
+            sc.style.setProperty(
+              "--c2",
+              t[1] ? c2 : `color-mix(in srgb,${c1} 45%,#0b0f1a)`,
+            );
+            $("#detail").style.setProperty("--glyph", glyphURL(t[0]));
+            $("#types").innerHTML = t.map(tag).join("");
+            $("#emblem").innerHTML = emblem({ t });
+          }
+          const oa = (pk.sprites.other || {})["official-artwork"] || {};
+          V.art = {
+            n: oa.front_default || pk.sprites.front_default || null,
+            s: oa.front_shiny || null,
+          };
+          paintArt();
+          extra(V.sp, pk);
+          describeForm(pk, dpk || pk);
+        }
+
+        async function setForm(i) {
+          const id = V.id;
+          V.i = i;
+          paintBar();
+          try {
+            const pk = await get("pokemon/" + V.list[i].name);
+            const dpk = i > 0 ? await get("pokemon/" + V.list[0].name) : pk;
+            if (st.sel !== id || V.id !== id || V.i !== i) return;
+            apply(pk, dpk);
+          } catch (e) {}
+        }
+
+        async function loadVariants(id) {
+          try {
+            const sp = await get("pokemon-species/" + id);
+            if (st.sel !== id || V.id !== id) return;
+            const list = sp.varieties
+              .map((v) => ({
+                name: v.pokemon.name,
+                label: label(v, sp.name),
+                def: v.is_default,
+              }))
+              .sort((a, b) => b.def - a.def);
+            V.sp = sp;
+            V.list = list;
+            if (list.length > 1) {
+              paintBar();
+              bar.hidden = false;
+            }
+          } catch (e) {}
+        }
+
+        $("#fprev").addEventListener("click", () => {
+          if (V.list.length > 1)
+            setForm((V.i - 1 + V.list.length) % V.list.length);
+        });
+        $("#fnext").addEventListener("click", () => {
+          if (V.list.length > 1) setForm((V.i + 1) % V.list.length);
+        });
+
+        const _ap = applyShiny;
+        applyShiny = function () {
+          _ap();
+          if (V.i > 0 && V.art) paintArt();
+        };
+        const _sh = show;
+        show = function (id, open) {
+          V.id = id;
+          V.i = 0;
+          V.list = [];
+          V.sp = null;
+          V.art = null;
+          bar.hidden = true;
+          const en = $("#descen");
+          if (en) en.style.display = "";
+          _sh(id, open);
+          V.desc = $("#desc").textContent;
+          loadVariants(id);
+        };
         show(st.sel, false);
       })();
     </script>
